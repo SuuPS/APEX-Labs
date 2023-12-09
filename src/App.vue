@@ -4,6 +4,7 @@ import Menu from './components/Menu.vue'
 
 <template>
   <Menu msg="Vite + Vue" />
+  <router-view />
 </template>
 
 <style scoped>

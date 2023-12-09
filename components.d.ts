@@ -8,6 +8,9 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AMenu: typeof import('ant-design-vue/es')['Menu']
+    H1: typeof import('./src/components/H1.vue')['default']
+    H2: typeof import('./src/components/H2.vue')['default']
+    H3: typeof import('./src/components/H3.vue')['default']
     Menu: typeof import('./src/components/Menu.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

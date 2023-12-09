@@ -2,21 +2,7 @@
 import { defineStore } from 'pinia';
 import { h, watch } from 'vue';
 import { MailOutlined, PieChartOutlined } from '@ant-design/icons-vue';
-
-interface MenuItem {
-    key: string;
-    icon: () => JSX.Element;
-    label: string;
-    title: string;
-    subItems?: MenuItem[]; // Переименование свойства "children" в "subItems"
-}
-
-interface MenuState {
-    collapsed: boolean;
-    selectedKeys: string[];
-    openKeys: string[];
-    preOpenKeys: string[];
-}
+import { MenuItem, MenuState } from './menuTypes';
 
 export const useMenuStore = defineStore('menu', () => {
     const menuItems: MenuItem[] = [
@@ -25,7 +11,7 @@ export const useMenuStore = defineStore('menu', () => {
             icon: () => h(MailOutlined),
             label: 'Справочники',
             title: 'Navigation One',
-            subItems: [ // Изменение свойства "children" на "subItems"
+            "children": [
                 {
                     key: '1',
                     label: 'Иглы',
@@ -39,7 +25,7 @@ export const useMenuStore = defineStore('menu', () => {
             ],
         },
         {
-            key: '5',
+            key: '3',
             icon: () => h(PieChartOutlined),
             label: 'Назначения',
             title: 'Option 1',
@@ -55,8 +41,12 @@ export const useMenuStore = defineStore('menu', () => {
 
     const menuStore = useMenuStore();
 
-    watch(() => menu.openKeys, (newVal, oldVal) => {
-        menuStore.updateOpenKeys(newVal);
+    const updateOpenKeys = (newVal: string[]) => {
+        menuStore.menu.openKeys = newVal;
+    };
+
+    watch(() => menu.openKeys, (newVal) => {
+        updateOpenKeys(newVal);
     });
 
     return {
