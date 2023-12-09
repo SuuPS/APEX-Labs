@@ -3,27 +3,26 @@
     <div style="width: 256px; height: 100vh;">
       <a-menu
           style="height: 100%"
-          v-model:openKeys="state.openKeys"
-          v-model:selectedKeys="state.selectedKeys"
+          v-model:openKeys="menu.openKeys"
+          v-model:selectedKeys="menu.selectedKeys"
           mode="inline"
           theme="dark"
-          :inline-collapsed="state.collapsed"
-          :items="items"
+          :inline-collapsed="menu.collapsed"
+          :items="menuItems"
       ></a-menu>
     </div>
     <div>
-      <router-view/>
+      <LoaderComponent v-if="loading"/>
+      <router-view v-else/>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {reactive, ref} from 'vue';
 import { useMenuStore } from '../store/menu/menu.ts';
+import LoaderComponent from "./LoaderComponent.vue";
 
-const { menu, menuItems } = useMenuStore();
-const state = reactive(menu);
-const items = ref(menuItems);
+const { menu, menuItems, loading } = useMenuStore();
 
 </script>
 

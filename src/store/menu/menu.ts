@@ -1,12 +1,15 @@
 
 import { defineStore } from 'pinia';
-import { h, watch, reactive } from 'vue';
+import {h, watch, reactive, ref, Ref} from 'vue';
+
 import { MailOutlined, PieChartOutlined } from '@ant-design/icons-vue';
 import { MenuItem, MenuState } from './menuTypes';
 import { useRouter } from 'vue-router';
 
 export const useMenuStore = defineStore('menu', () => {
     const router = useRouter();
+
+    const loading: Ref<boolean> = ref(false)
 
     const menuItems: MenuItem[] = reactive([
         {
@@ -43,7 +46,9 @@ export const useMenuStore = defineStore('menu', () => {
     })
 
     const updateOpenKeys = (newVal: string[]) => {
-        console.log(newVal)
+
+        loading.value = true
+
         menu.openKeys = newVal;
 
         let routerPath: string = ''
@@ -65,6 +70,8 @@ export const useMenuStore = defineStore('menu', () => {
         }
 
         router.push({name : routerPath})
+
+        loading.value = false
     };
 
     watch(() => menu.selectedKeys, (newVal) => {
@@ -73,6 +80,7 @@ export const useMenuStore = defineStore('menu', () => {
 
     return {
         menu,
-        menuItems
+        menuItems,
+        loading
     };
 });
