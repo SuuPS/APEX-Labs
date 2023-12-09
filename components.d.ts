@@ -8,10 +8,14 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AMenu: typeof import('ant-design-vue/es')['Menu']
-    H1: typeof import('./src/components/H1.vue')['default']
-    H2: typeof import('./src/components/H2.vue')['default']
-    H3: typeof import('./src/components/H3.vue')['default']
-    Menu: typeof import('./src/components/Menu.vue')['default']
+    H1: typeof import('./src/views/HaView.vue')['default']
+    H2: typeof import('./src/views/HsComponent.vue')['default']
+    H3: typeof import('./src/views/HrgComponent.vue')['default']
+    HaComponent: typeof import('./src/views/HaView.vue')['default']
+    HrgComponent: typeof import('./src/views/HrgComponent.vue')['default']
+    HsComponent: typeof import('./src/views/HsComponent.vue')['default']
+    Menu: typeof import('./src/components/MenuComponent.vue')['default']
+    MenuComponent: typeof import('./src/components/MenuComponent.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

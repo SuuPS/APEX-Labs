@@ -1,26 +1,29 @@
-// menu.ts
+
 import { defineStore } from 'pinia';
-import { h, watch } from 'vue';
+import { h, watch, reactive } from 'vue';
 import { MailOutlined, PieChartOutlined } from '@ant-design/icons-vue';
 import { MenuItem, MenuState } from './menuTypes';
+import { useRouter } from 'vue-router';
 
 export const useMenuStore = defineStore('menu', () => {
-    const menuItems: MenuItem[] = [
+    const router = useRouter();
+
+    const menuItems: MenuItem[] = reactive([
         {
             key: 'sub1',
             icon: () => h(MailOutlined),
             label: 'Справочники',
             title: 'Navigation One',
-            "children": [
+            children: [
                 {
                     key: '1',
                     label: 'Иглы',
-                    title: 'Option 5',
+                    title: 'H1',
                 },
                 {
                     key: '2',
                     label: 'Лекарственные препараты',
-                    title: 'Option 6',
+                    title: 'H2',
                 },
             ],
         },
@@ -28,29 +31,48 @@ export const useMenuStore = defineStore('menu', () => {
             key: '3',
             icon: () => h(PieChartOutlined),
             label: 'Назначения',
-            title: 'Option 1',
+            title: 'H3',
         },
-    ];
+    ])
 
-    const menu: MenuState = {
+    const menu: MenuState = reactive({
         collapsed: false,
         selectedKeys: ['1'],
         openKeys: ['sub1'],
         preOpenKeys: ['sub1'],
-    };
-
-    const menuStore = useMenuStore();
+    })
 
     const updateOpenKeys = (newVal: string[]) => {
-        menuStore.menu.openKeys = newVal;
+        console.log(newVal)
+        menu.openKeys = newVal;
+
+        let routerPath: string = ''
+
+        for (const item of menuItems) {
+            if (item.children) {
+                for (const subItem of item.children) {
+                    if (subItem.key === newVal[newVal.length - 1]) {
+                        routerPath = subItem.title;
+                        break; // Прерываем цикл, так как мы уже нашли соответствие
+                    }
+                }
+            } else {
+                if (item.key === newVal[newVal.length - 1]) {
+                    routerPath = item.title;
+                    break; // Прерываем цикл, так как мы уже нашли соответствие
+                }
+            }
+        }
+
+        router.push({name : routerPath})
     };
 
-    watch(() => menu.openKeys, (newVal) => {
-        updateOpenKeys(newVal);
+    watch(() => menu.selectedKeys, (newVal) => {
+        updateOpenKeys(newVal)
     });
 
     return {
         menu,
-        menuItems,
+        menuItems
     };
 });
