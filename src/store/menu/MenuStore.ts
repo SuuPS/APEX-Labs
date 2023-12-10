@@ -1,9 +1,8 @@
 
 import { defineStore } from 'pinia';
 import {h, watch, reactive, ref, Ref} from 'vue';
-
 import { MailOutlined, PieChartOutlined } from '@ant-design/icons-vue';
-import { MenuItem, MenuState } from './menuTypes';
+import { MenuItem, MenuState } from './menuTypes.ts';
 import { useRouter } from 'vue-router';
 
 export const useMenuStore = defineStore('menu', () => {

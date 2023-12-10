@@ -1,4 +1,4 @@
-// menuTypes.ts
+// spineTypes.ts
 
 
 export interface SubItem {

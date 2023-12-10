@@ -11,7 +11,7 @@
           :items="menuItems"
       ></a-menu>
     </div>
-    <div>
+    <div style="width: 100%">
       <LoaderComponent v-if="loading"/>
       <router-view v-else/>
     </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useMenuStore } from '../store/menu/menu.ts';
+import { useMenuStore } from '../store/menu/MenuStore.ts';
 import LoaderComponent from "./LoaderComponent.vue";
 
 const { menu, menuItems, loading } = useMenuStore();
