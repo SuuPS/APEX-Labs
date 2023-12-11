@@ -3,6 +3,9 @@
 <template>
 
   <div style="padding: 20px; width: 80%">
+
+    <a-typography-title :level="3">Справочник иглы</a-typography-title>
+
     <div>
       <a-form
           :model="formState"
@@ -25,7 +28,17 @@
       </a-form>
     </div>
 
-    <a-table :columns="columns" :data-source="dataSource" bordered>
+    <div>
+        <a-space direction="vertical" style="width: 100%; margin-bottom: 10px">
+          <a-input-search
+              v-model:value="value"
+              placeholder="Введите название..."
+              enter-button
+          />
+        </a-space>
+    </div>
+
+    <a-table :columns="columns" :data-source="filteredDataSource" bordered>
       <template #bodyCell="{ column, text, record }">
         <template v-if="column.dataIndex === 'name'">
           <div>
@@ -67,7 +80,7 @@ import { toRefs } from 'vue';
 import { EditOutlined, DeleteOutlined, DiffOutlined } from '@ant-design/icons-vue';
 import { useSpineStore} from "../../store/common/spineStore.ts";
 
-const { formState, columns, dataSource, editableData, add, edit, save, cancel, deleteRow } = toRefs(useSpineStore());
+const { filteredDataSource, formState, value, columns, editableData, add, edit, save, cancel, deleteRow } = toRefs(useSpineStore());
 
 </script>
 

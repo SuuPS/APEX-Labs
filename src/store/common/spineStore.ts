@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import {reactive, ref} from 'vue';
+import {reactive, ref, computed} from 'vue';
 import { CustomColumn, DataItem } from './spineTypes.ts';
 import {UnwrapRef} from "vue";
 import {cloneDeep} from "lodash-es";
@@ -13,12 +13,12 @@ export const useSpineStore = defineStore('spine', () => {
 
     const columns: CustomColumn[] = reactive([
         {
-            title: 'name',
+            title: 'Название',
             dataIndex: 'name',
             width: '70%',
         },
         {
-            title: 'operation',
+            title: 'Действия',
             dataIndex: 'operation',
             width: '10%',
         },
@@ -34,6 +34,13 @@ export const useSpineStore = defineStore('spine', () => {
             name: 'Артериальные',
         }
     ]);
+
+    const value = ref<string>('');
+
+    const filteredDataSource = computed(() => {
+        const searchQuery = value.value.toLowerCase();
+        return dataSource.value.filter(item => item.name.toLowerCase().includes(searchQuery));
+    });
 
     const editableData: UnwrapRef<Record<string, DataItem>> = reactive({});
 
@@ -58,6 +65,8 @@ export const useSpineStore = defineStore('spine', () => {
     };
 
     return {
+        filteredDataSource,
+        value,
         formState,
         columns,
         dataSource,
