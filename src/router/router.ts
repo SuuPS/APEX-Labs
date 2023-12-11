@@ -10,6 +10,16 @@ const routes: RouteRecordRaw[] = [
                 path: '/menu/common',
                 name: 'common',
                 component: () => import('../components/CommonModal.vue')
+            },
+            {
+                path: '/menu/appointment-list',
+                name:'AppointmentList',
+                component: () => import('../components/AppointmentList.vue')
+            },
+            {
+                path: '/menu/appointment-form',
+                name:'AppointmentForm',
+                component: () => import('../components/AppointmentForm.vue')
             }
         ]
     }

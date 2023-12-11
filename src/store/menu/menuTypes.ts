@@ -1,4 +1,4 @@
-// commonTypes.ts
+// appointmentTypes.ts
 
 
 export interface SubItem {

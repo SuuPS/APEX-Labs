@@ -84,8 +84,8 @@ export const useMenuStore = defineStore('menu', () => {
             key: '9',
             icon: () => h(MailOutlined),
             label: 'Назначения',
-            title: 'h3',
-            name: 'h3',
+            title: 'AppointmentList',
+            name: 'AppointmentList',
             options: false
         },
     ])
@@ -132,18 +132,21 @@ export const useMenuStore = defineStore('menu', () => {
                 for (const subItem of item.children) {
                     if (subItem.key === newVal[newVal.length - 1]) {
                         routerPath = subItem;
-                        break; // Прерываем цикл, так как мы уже нашли соответствие
+                        break
                     }
                 }
             } else {
                 if (item.key === newVal[newVal.length - 1]) {
                     routerPath = item;
-                    break; // Прерываем цикл, так как мы уже нашли соответствие
+                    break
                 }
             }
         }
 
-        router.push({name : routerPath.title, query: { page: routerPath.name } })
+        router.push({
+            name : routerPath.title,
+            query: !routerPath.children ? { page: routerPath.name } : {}
+        })
 
         loading.value = false
     };
