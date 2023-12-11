@@ -12,11 +12,12 @@ export interface DataItem {
 }
 
 export interface DataSources {
-    medicinalProducts: DataItem[];
+    spineType: DataItem[];
     spine: DataItem[];
     catheter: DataItem[];
     bicarbonate: DataItem[];
-    spineType: DataItem[];
+    medicinalProducts: DataItem[];
     receptionPath: DataItem[];
+    doses: DataItem[];
     frequencyAdmission: DataItem[];
 }

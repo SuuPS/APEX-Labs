@@ -5,6 +5,8 @@ export interface SubItem {
     key: string;
     label: string;
     title: string;
+    name: string;
+    options: boolean
 }
 
 export interface MenuItem {
@@ -12,6 +14,8 @@ export interface MenuItem {
     icon: () => JSX.Element;
     label: string;
     title: string;
+    name: string;
+    options: boolean
     children?: SubItem[];
 }
 

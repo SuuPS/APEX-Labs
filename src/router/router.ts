@@ -8,8 +8,8 @@ const routes: RouteRecordRaw[] = [
         children: [
             {
                 path: '/menu/common',
-                name: 'SpineView',
-                component: () => import('../views/common/SpineView.vue')
+                name: 'common',
+                component: () => import('../components/CommonModal.vue')
             }
         ]
     }

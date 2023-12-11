@@ -75,20 +75,27 @@
 </template>
 
 <script lang="ts" setup>
-import {onMounted, toRefs} from 'vue';
+import {onMounted, toRefs, computed, watch} from 'vue';
 import { EditOutlined, DeleteOutlined, DiffOutlined } from '@ant-design/icons-vue';
-import { useCommonStore } from "../../store/common/commonStore.ts";
-const commonStore = useCommonStore();
+import { useCommonStore } from "../store/common/commonStore.ts";
+import { useMenuStore} from "../store/menu/MenuStore.ts";
 
 const props = defineProps(['modalName']);
+
+const commonStore = useCommonStore();
+
 
 const { setCurrentDataSource, add, formState, columns, editableData, edit, save, cancel, deleteRow } = commonStore;
 
 const { filteredDataSource, search, getTitle } = toRefs(commonStore);
 
 onMounted(()=>{
-  setCurrentDataSource( props.modalName ? props.modalName : 'catheter')
+  setCurrentDataSource( props.modalName ? props.modalName : useMenuStore().pageName)
 })
+
+watch(() => useMenuStore().pageName, (newValue) => {
+  setCurrentDataSource(newValue)
+});
 
 
 </script>

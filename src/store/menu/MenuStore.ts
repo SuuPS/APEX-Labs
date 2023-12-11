@@ -1,45 +1,120 @@
 
 import { defineStore } from 'pinia';
-import {h, watch, reactive, ref, Ref} from 'vue';
-import { MailOutlined, PieChartOutlined } from '@ant-design/icons-vue';
+import {h, watch, reactive, ref, Ref, computed} from 'vue';
+import { MailOutlined } from '@ant-design/icons-vue';
 import { MenuItem, MenuState } from './menuTypes.ts';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 export const useMenuStore = defineStore('menu', () => {
+    const route = useRoute();
     const router = useRouter();
+
+    const pageName = computed( () => route.query.page )
 
     const loading: Ref<boolean> = ref(false)
 
-    const menuItems: MenuItem[] = reactive([
+    const menuItems = reactive<MenuItem[]>([
         {
             key: 'sub1',
             icon: () => h(MailOutlined),
             label: 'Справочники',
             title: 'Navigation One',
+            name: 'h3',
             children: [
                 {
                     key: '1',
-                    label: 'Иглы',
-                    title: 'SpineView',
+                    label: 'Типы игл',
+                    title: 'common',
+                    name: 'spineType',
+                    options: true
                 },
                 {
                     key: '2',
-                    label: 'Лекарственные препараты',
-                    title: 'Medicinal-products',
+                    label: 'Иглы',
+                    title: 'common',
+                    name: 'spine',
+                    options: true
                 },
+                {
+                    key: '3',
+                    label: 'Катетеры',
+                    title: 'common',
+                    name: 'catheter',
+                    options: true
+                },
+                {
+                    key: '4',
+                    label: 'Бикарбонат',
+                    title: 'common',
+                    name: 'bicarbonate',
+                    options: false
+                },
+                {
+                    key: '5',
+                    label: 'Лекарственные препараты',
+                    title: 'common',
+                    name: 'medicinalProducts',
+                    options: true
+                },
+                {
+                    key: '6',
+                    label: 'Путь приема',
+                    title: 'common',
+                    name: 'receptionPath',
+                    options: false
+                },
+                {
+                    key: '7',
+                    label: 'Дозы препаратов',
+                    title: 'common',
+                    name: 'doses',
+                    options: false
+                },
+                {
+                    key: '8',
+                    label: 'Кратность приема',
+                    title: 'common',
+                    name: 'frequencyAdmission',
+                    options: false
+                }
             ],
+            options: false
         },
         {
-            key: '3',
-            icon: () => h(PieChartOutlined),
+            key: '9',
+            icon: () => h(MailOutlined),
             label: 'Назначения',
-            title: 'H3',
+            title: 'h3',
+            name: 'h3',
+            options: false
         },
     ])
 
-    const menu: MenuState = reactive({
+    const selectedPage = computed(() => {
+        if(pageName){
+            for (const item of menuItems) {
+                if (item.children) {
+                    if(item.children.find(subItem => subItem.name === pageName.value)) {
+                        return item.children.find(subItem => subItem.name === pageName.value)
+                    }
+                    else {
+                        return null
+                    }
+                } else {
+                    if (item.name === pageName.value) {
+                        return item
+                    }
+                    else {
+                        return null
+                    }
+                }
+            }
+        }
+    });
+
+    const menu = reactive<MenuState>(<MenuState>{
         collapsed: false,
-        selectedKeys: ['1'],
+        selectedKeys: selectedPage ? [selectedPage.value?.key] : ['1'],
         openKeys: ['sub1'],
         preOpenKeys: ['sub1'],
     })
@@ -50,25 +125,25 @@ export const useMenuStore = defineStore('menu', () => {
 
         menu.openKeys = newVal;
 
-        let routerPath: string = ''
+        let routerPath: any
 
         for (const item of menuItems) {
             if (item.children) {
                 for (const subItem of item.children) {
                     if (subItem.key === newVal[newVal.length - 1]) {
-                        routerPath = subItem.title;
+                        routerPath = subItem;
                         break; // Прерываем цикл, так как мы уже нашли соответствие
                     }
                 }
             } else {
                 if (item.key === newVal[newVal.length - 1]) {
-                    routerPath = item.title;
+                    routerPath = item;
                     break; // Прерываем цикл, так как мы уже нашли соответствие
                 }
             }
         }
 
-        router.push({name : routerPath})
+        router.push({name : routerPath.title, query: { page: routerPath.name } })
 
         loading.value = false
     };
@@ -78,6 +153,8 @@ export const useMenuStore = defineStore('menu', () => {
     });
 
     return {
+        pageName,
+        selectedPage,
         menu,
         menuItems,
         loading

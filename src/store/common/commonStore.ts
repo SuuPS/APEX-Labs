@@ -28,7 +28,7 @@ export const useCommonStore = defineStore('common', () => {
 
     const dataSources = reactive<DataSources>({
         spineType: {
-            name: 'Справочник лекарственные препараты',
+            name: 'Справочник типы игл',
             datas: [
                 {
                     key: '1',
@@ -86,6 +86,19 @@ export const useCommonStore = defineStore('common', () => {
                 }
             ]
         },
+        bicarbonate: {
+            name: 'Справочник бикарбонат',
+            datas: [
+                {
+                    key: '1',
+                    name: 'граммов',
+                },
+                {
+                    key: '2',
+                    name: 'литров',
+                }
+            ]
+        },
         medicinalProducts: {
             name: 'Справочник лекарственные препараты',
             datas: [
@@ -107,21 +120,8 @@ export const useCommonStore = defineStore('common', () => {
                 }
             ]
         },
-        bicarbonate: {
-            name: 'Справочник лекарственные препараты',
-            datas: [
-                {
-                    key: '1',
-                    name: 'граммов',
-                },
-                {
-                    key: '2',
-                    name: 'литров',
-                }
-            ]
-        },
         receptionPath: {
-            name: 'Справочник лекарственные препараты',
+            name: 'Справочник путь приема',
             datas: [
                 {
                     key: '1',
@@ -137,8 +137,25 @@ export const useCommonStore = defineStore('common', () => {
                 }
             ]
         },
+        doses: {
+            name: 'Справочник дозы препаратов',
+            datas: [
+                {
+                    key: '1',
+                    name: 'мкг',
+                },
+                {
+                    key: '2',
+                    name: 'мл',
+                },
+                {
+                    key: '2',
+                    name: 'мг/кг',
+                }
+            ]
+        },
         frequencyAdmission: {
-            name: 'Справочник лекарственные препараты',
+            name: 'Справочник кратность приема',
             datas: [
                 {
                     key: '1',
@@ -153,7 +170,7 @@ export const useCommonStore = defineStore('common', () => {
                     name: '3 раза в день',
                 }
             ]
-        },
+        }
     });
 
     const search = ref<string>('');
@@ -168,7 +185,7 @@ export const useCommonStore = defineStore('common', () => {
             }
     })
 
-    const setCurrentDataSource = (key: string) => {
+    const setCurrentDataSource = (key: string | null | LocationQueryValue[]) => {
         currentDataSource.value = key
     }
 
