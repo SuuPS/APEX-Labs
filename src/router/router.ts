@@ -7,19 +7,19 @@ const routes: RouteRecordRaw[] = [
         component: () => import("../components/MenuComponent.vue"),
         children: [
             {
-                path: '/Menu/h1',
-                name: 'H1',
-                component: () => import('../views/dictionaries/SpineView.vue')
+                path: '/menu/spineView',
+                name: 'SpineView',
+                component: () => import('../views/common/SpineView.vue')
             },
             {
-                path: '/Menu/h2',
-                name: 'H2',
-                component: () => import('../views/dictionaries/HsComponent.vue')
+                path: '/menu/medicinal-products',
+                name: 'Medicinal-products',
+                component: () => import('../views/common/Medicinalproducts.vue')
             },
             {
                 path: '/Menu/h3',
                 name: 'H3',
-                component: () => import('../views/dictionaries/HrgComponent.vue')
+                component: () => import('../views/common/HrgComponent.vue')
             }
         ]
     }

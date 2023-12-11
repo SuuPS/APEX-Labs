@@ -78,9 +78,9 @@
 <script lang="ts" setup>
 import { toRefs } from 'vue';
 import { EditOutlined, DeleteOutlined, DiffOutlined } from '@ant-design/icons-vue';
-import { useSpineStore} from "../../store/common/spineStore.ts";
+import { useSpineStore} from "../../store/spine/spineStore.ts";
 
-const { filteredDataSource, formState, value, columns, editableData, add, edit, save, cancel, deleteRow } = toRefs(useSpineStore());
+const { filteredDataSource, add, formState, value, columns, editableData, edit, save, cancel, deleteRow } = toRefs(useSpineStore());
 
 </script>
 

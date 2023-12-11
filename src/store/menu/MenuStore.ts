@@ -20,12 +20,12 @@ export const useMenuStore = defineStore('menu', () => {
                 {
                     key: '1',
                     label: 'Иглы',
-                    title: 'H1',
+                    title: 'SpineView',
                 },
                 {
                     key: '2',
                     label: 'Лекарственные препараты',
-                    title: 'H2',
+                    title: 'Medicinal-products',
                 },
             ],
         },

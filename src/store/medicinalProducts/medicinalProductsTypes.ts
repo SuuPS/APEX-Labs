@@ -1,4 +1,4 @@
-// spineTypes.ts
+// medicinalProductsTypes.ts
 
 export interface CustomColumn {
     title: string;
