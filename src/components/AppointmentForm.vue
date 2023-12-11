@@ -1,164 +1,74 @@
 
 <template>
-  <div style="padding: 20px">
-    <a-typography-title :level="3">Назначения сеанса гемодиализа Жусуп</a-typography-title>
-
-    <a-layout-content
-        :style="{ padding: '0 50px', marginTop: '64px' }">
-      <div
-          style="border: 10px solid #0000"
-          :style="{ background: '#fff', padding: '24px', minHeight: '380px' }">
-        Content
-      </div>
-    </a-layout-content>
-
+  <div class="">
     <a-form
         :model="formState"
         name="validate_other"
         v-bind="formItemLayout"
         @finishFailed="onFinishFailed"
         @finish="onFinish"
-    >
-      <a-form-item label="Plain Text">
-        <span class="ant-form-text">China</span>
-      </a-form-item>
-      <a-form-item
-          name="select"
-          label="Select"
-          has-feedback
-          :rules="[{ required: true, message: 'Please select your country!' }]"
-      >
-        <a-select v-model:value="formState.select" placeholder="Please select a country">
-          <a-select-option value="china">China</a-select-option>
-          <a-select-option value="usa">U.S.A</a-select-option>
-        </a-select>
-      </a-form-item>
+        class="container border m-auto shadow-md mt-8 rounded-2xl p-5 grid grid-cols-12 gap-2">
 
-      <a-form-item
-          name="select-multiple"
-          label="Select[multiple]"
-          :rules="[{ required: true, message: 'Please select your favourite colors!', type: 'array' }]"
-      >
-        <a-select
-            v-model:value="formState['select-multiple']"
-            mode="multiple"
-            placeholder="Please select favourite colors"
-        >
-          <a-select-option value="red">Red</a-select-option>
-          <a-select-option value="green">Green</a-select-option>
-          <a-select-option value="blue">Blue</a-select-option>
-        </a-select>
-      </a-form-item>
+      <div class="col-span-12">
+        <a-typography-title class="col-span-5 flex justify-between items-center" :level="3">
+          Сеанс гемодиализа
+          <a-typography-title :level="5">
+            № месяце: <span class="text-cyan-900">4</span>
+          </a-typography-title>
+        </a-typography-title>
+        <a-typography-title class="" :level="3">Назначения сеанса гемодиализа</a-typography-title>
+      </div>
 
-      <a-form-item label="InputNumber">
-        <a-form-item name="input-number" no-style>
-          <a-input-number v-model:value="formState['input-number']" :min="1" :max="10" />
+      <div class="col-span-12">
+        <a-typography-text strong class="font-medium mb-2">Программа аппарата</a-typography-text>
+        <a-form-item
+            class="mt-1"
+            name="radio-button"
+            :rules="[{ required: true, message: 'Please pick an item!' }]">
+          <a-radio-group v-model:value="formState['radio-button']" class="flex items-center gap-1">
+            <a-radio-button style="width: 100px" class="flex justify-center items-center" value="a">HD</a-radio-button>
+            <a-radio-button style="width: 100px" class="flex justify-center items-center" value="b">HDF</a-radio-button>
+            <a-radio-button style="width: 100px" class="flex justify-center items-center" value="c">UF</a-radio-button>
+          </a-radio-group>
         </a-form-item>
-        <span class="ant-form-text">machines</span>
-      </a-form-item>
+      </div>
 
-      <a-form-item name="switch" label="Switch">
-        <a-switch v-model:checked="formState.switch" />
-      </a-form-item>
+      <div class="col-span-12 grid grid-cols-12">
+        <a-typography-text strong class="font-medium col-span-12">Диализатор</a-typography-text>
+        <div class="col-span-4 flex items-center gap-2 mt-2">
+          <a-input placeholder="Basic usage" value='Спр. "Диализаторы"'/>
+          <button class="border flex justify-center items-center w-10 h-full rounded">
+            <MenuUnfoldOutlined/>
+          </button>
+        </div>
+      </div>
 
-      <a-form-item name="slider" label="Slider">
-        <a-slider
-            v-model:value="formState.slider"
-            :marks="{
-          0: 'A',
-          20: 'B',
-          40: 'C',
-          60: 'D',
-          80: 'E',
-          100: 'F',
-        }"
-        />
-      </a-form-item>
+      <div class="col-span-12 grid grid-cols-12">
+        <div class="font-medium col-span-4">
+          <a-typography-text class="" strong>Концентратор</a-typography-text>
+          <div class="flex items-center gap-2 mt-2">
+            <a-input placeholder="Basic usage" value='Спр. "Концентраторы"'/>
+            <button class="border flex justify-center items-center w-10 py-2 h-full rounded">
+              <MenuUnfoldOutlined/>
+            </button>
+          </div>
+        </div>
 
-      <a-form-item name="radio-group" label="Radio.Group">
-        <a-radio-group v-model:value="formState['radio-group']">
-          <a-radio value="a">item 1</a-radio>
-          <a-radio value="b">item 2</a-radio>
-          <a-radio value="c">item 3</a-radio>
-        </a-radio-group>
-      </a-form-item>
+        <div class="col-span-1"></div>
 
-      <a-form-item
-          name="radio-button"
-          label="Radio.Button"
-          :rules="[{ required: true, message: 'Please pick an item!' }]"
-      >
-        <a-radio-group v-model:value="formState['radio-button']">
-          <a-radio-button value="a">item 1</a-radio-button>
-          <a-radio-button value="b">item 2</a-radio-button>
-          <a-radio-button value="c">item 3</a-radio-button>
-        </a-radio-group>
-      </a-form-item>
+        <div class="font-medium col-span-1 grid grid-cols-12 gap-2">
+          <a-typography-text class="col-span-12" strong>Объем л.</a-typography-text>
+          <a-input-number class="col-span-12" addon-after="л"></a-input-number>
+        </div>
+      </div>
 
-      <a-form-item name="checkbox-group" label="Checkbox.Group">
-        <a-checkbox-group v-model:value="formState['checkbox-group']">
-          <a-row>
-            <a-col :span="8">
-              <a-checkbox value="A" style="line-height: 32px">A</a-checkbox>
-            </a-col>
-            <a-col :span="8">
-              <a-checkbox value="B" style="line-height: 32px" disabled>B</a-checkbox>
-            </a-col>
-            <a-col :span="8">
-              <a-checkbox value="C" style="line-height: 32px">C</a-checkbox>
-            </a-col>
-            <a-col :span="8">
-              <a-checkbox value="D" style="line-height: 32px">D</a-checkbox>
-            </a-col>
-            <a-col :span="8">
-              <a-checkbox value="E" style="line-height: 32px">E</a-checkbox>
-            </a-col>
-            <a-col :span="8">
-              <a-checkbox value="F" style="line-height: 32px">F</a-checkbox>
-            </a-col>
-          </a-row>
-        </a-checkbox-group>
-      </a-form-item>
 
-      <a-form-item name="rate" label="Rate">
-        <a-rate v-model:value="formState.rate" allow-half />
-      </a-form-item>
-
-      <a-form-item name="upload" label="Upload" extra="longgggggggggggggggggggggggggggggggggg">
-        <a-upload
-            v-model:fileList="formState.upload"
-            name="logo"
-            action="/upload.do"
-            list-type="picture"
-        >
-          <a-button>
-            <template #icon><UploadOutlined /></template>
-            Click to upload
-          </a-button>
-        </a-upload>
-      </a-form-item>
-
-      <a-form-item label="Dragger">
-        <a-form-item name="dragger" no-style>
-          <a-upload-dragger v-model:fileList="formState.dragger" name="files" action="/upload.do">
-            <p class="ant-upload-drag-icon">
-              <InboxOutlined />
-            </p>
-            <p class="ant-upload-text">Click or drag file to this area to upload</p>
-            <p class="ant-upload-hint">Support for a single or bulk upload.</p>
-          </a-upload-dragger>
-        </a-form-item>
-      </a-form-item>
-
-      <a-form-item :wrapper-col="{ span: 12, offset: 6 }">
-        <a-button type="primary" html-type="submit">Submit</a-button>
-      </a-form-item>
     </a-form>
   </div>
 </template>
 <script lang="ts" setup>
 import { reactive } from 'vue';
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons-vue';
+import { UploadOutlined, InboxOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue';
 
 const formItemLayout = {
   labelCol: { span: 6 },
@@ -178,4 +88,33 @@ const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
 </script>
+
+<style>
+@media (max-width: 639px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+/* Для экранов шириной от 640 пикселей до 767 пикселей */
+@media (min-width: 640px) and (max-width: 767px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+/* Для экранов шириной от 768 пикселей до 1023 пикселей */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+/* Для экранов шириной 1024 пикселя и более */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 960px; /* Ваша желаемая ширина для больших экранов */
+  }
+}
+</style>
 

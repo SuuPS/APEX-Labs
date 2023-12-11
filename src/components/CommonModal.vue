@@ -18,7 +18,7 @@
           </a-form-item>
 
           <a-form-item>
-            <a-button type="primary" html-type="submit">
+            <a-button type="primary" class="flex items-center justify-around" ghost html-type="submit">
               <DiffOutlined />
               Создать
             </a-button>
