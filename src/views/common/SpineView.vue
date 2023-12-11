@@ -1,10 +1,9 @@
-// Справочник иглы
 
 <template>
 
   <div style="padding: 20px; width: 80%">
 
-    <a-typography-title :level="3">Справочник иглы</a-typography-title>
+    <a-typography-title :level="3">{{ getTitle }}</a-typography-title>
 
     <div>
       <a-form
@@ -29,13 +28,13 @@
     </div>
 
     <div>
-        <a-space direction="vertical" style="width: 100%; margin-bottom: 10px">
-          <a-input-search
-              v-model:value="value"
-              placeholder="Введите название..."
-              enter-button
-          />
-        </a-space>
+      <a-space direction="vertical" style="width: 100%; margin-bottom: 10px">
+        <a-input-search
+            v-model:value="search"
+            placeholder="Введите название..."
+            enter-button
+        />
+      </a-space>
     </div>
 
     <a-table :columns="columns" :data-source="filteredDataSource" bordered>
@@ -76,11 +75,21 @@
 </template>
 
 <script lang="ts" setup>
-import { toRefs } from 'vue';
+import {onMounted, toRefs} from 'vue';
 import { EditOutlined, DeleteOutlined, DiffOutlined } from '@ant-design/icons-vue';
-import { useSpineStore} from "../../store/spine/spineStore.ts";
+import { useCommonStore } from "../../store/common/commonStore.ts";
+const commonStore = useCommonStore();
 
-const { filteredDataSource, add, formState, value, columns, editableData, edit, save, cancel, deleteRow } = toRefs(useSpineStore());
+const props = defineProps(['modalName']);
+
+const { setCurrentDataSource, add, formState, columns, editableData, edit, save, cancel, deleteRow } = commonStore;
+
+const { filteredDataSource, search, getTitle } = toRefs(commonStore);
+
+onMounted(()=>{
+  setCurrentDataSource( props.modalName ? props.modalName : 'spine')
+})
+
 
 </script>
 
@@ -89,6 +98,3 @@ const { filteredDataSource, add, formState, value, columns, editableData, edit, 
   margin-right: 8px;
 }
 </style>
-
-
-

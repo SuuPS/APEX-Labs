@@ -7,19 +7,9 @@ const routes: RouteRecordRaw[] = [
         component: () => import("../components/MenuComponent.vue"),
         children: [
             {
-                path: '/menu/spineView',
+                path: '/menu/common',
                 name: 'SpineView',
                 component: () => import('../views/common/SpineView.vue')
-            },
-            {
-                path: '/menu/medicinal-products',
-                name: 'Medicinal-products',
-                component: () => import('../views/common/Medicinalproducts.vue')
-            },
-            {
-                path: '/Menu/h3',
-                name: 'H3',
-                component: () => import('../views/common/HrgComponent.vue')
             }
         ]
     }

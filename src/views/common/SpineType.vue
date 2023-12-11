@@ -87,7 +87,7 @@ const { setCurrentDataSource, add, formState, columns, editableData, edit, save,
 const { filteredDataSource, search, getTitle } = toRefs(commonStore);
 
 onMounted(()=>{
-  setCurrentDataSource( props.modalName ? props.modalName : 'medicinalProducts')
+  setCurrentDataSource( props.modalName ? props.modalName : 'spineType')
 })
 
 

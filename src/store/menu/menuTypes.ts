@@ -1,4 +1,4 @@
-// medicinalProductsTypes.ts
+// commonTypes.ts
 
 
 export interface SubItem {
