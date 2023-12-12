@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
-import  { DataItem } from '/appointmentTypes.ts'
+import {DataItem, FormType, SoftType} from './appointmentTypes.ts'
 import type { TableColumnsType } from 'ant-design-vue';
 import {reactive} from "vue";
 import { useRouter, useRoute } from 'vue-router';
+import {uuid} from "vue-uuid";
 export const useAppointmentStore = defineStore('appointment', () => {
     const route = useRoute();
     const router = useRouter();
@@ -26,6 +27,11 @@ export const useAppointmentStore = defineStore('appointment', () => {
 
     const data = reactive<DataItem[]>([]);
 
+    const formState = reactive<FormType>({
+        id: uuid.v4(),
+        softType: SoftType.HD,
+    });
+
     for (let i = 0; i < 100; i++) {
         data.push({
             key: i,
@@ -42,6 +48,7 @@ export const useAppointmentStore = defineStore('appointment', () => {
     return {
         columns,
         data,
+        formState,
         add
     };
 });

@@ -7,48 +7,67 @@
         v-bind="formItemLayout"
         @finishFailed="onFinishFailed"
         @finish="onFinish"
-        class="container border m-auto shadow-md mt-8 rounded-2xl p-5 grid grid-cols-12 gap-2">
+        class="container border m-auto mt-8 rounded p-5 grid grid-cols-12 gap-2">
 
-      <div class="col-span-12">
-        <a-typography-title class="col-span-5 flex justify-between items-center" :level="3">
-          Сеанс гемодиализа
+      <!-- Заголовок -->
+      <div class="col-span-12 grid grid-cols-12 mt-3">
+
+        <div class="col-span-5">
+          <a-typography-title :level="3">
+            Сеанс гемодиализа
+          </a-typography-title>
+        </div>
+
+        <div class="col-span-2 text-center pt-2">
           <a-typography-title :level="5">
             № месяце: <span class="text-cyan-900">4</span>
           </a-typography-title>
-        </a-typography-title>
-        <a-typography-title class="" :level="3">Назначения сеанса гемодиализа</a-typography-title>
+        </div>
+
+        <div class="col-span-12">
+          <a-typography-title :level="3">Назначения сеанса гемодиализа</a-typography-title>
+        </div>
       </div>
 
+      <!-- Программа аппарата -->
       <div class="col-span-12">
         <a-typography-text strong class="font-medium mb-2">Программа аппарата</a-typography-text>
         <a-form-item
             class="mt-1"
             name="radio-button"
             :rules="[{ required: true, message: 'Please pick an item!' }]">
-          <a-radio-group v-model:value="formState['radio-button']" class="flex items-center gap-1">
-            <a-radio-button style="width: 100px" class="flex justify-center items-center" value="a">HD</a-radio-button>
-            <a-radio-button style="width: 100px" class="flex justify-center items-center" value="b">HDF</a-radio-button>
-            <a-radio-button style="width: 100px" class="flex justify-center items-center" value="c">UF</a-radio-button>
+          <a-radio-group v-model:value="formState['softType']" class="flex items-center gap-1">
+            <a-radio-button style="width: 100px" class="flex justify-center items-center" :value="SoftType.HD">HD</a-radio-button>
+            <a-radio-button style="width: 100px" class="flex justify-center items-center" :value="SoftType.HDF">HDF</a-radio-button>
+            <a-radio-button style="width: 100px" class="flex justify-center items-center" :value="SoftType.UF">UF</a-radio-button>
           </a-radio-group>
         </a-form-item>
       </div>
 
+      <!-- Диализатор -->
       <div class="col-span-12 grid grid-cols-12">
         <a-typography-text strong class="font-medium col-span-12">Диализатор</a-typography-text>
         <div class="col-span-4 flex items-center gap-2 mt-2">
-          <a-input placeholder="Basic usage" value='Спр. "Диализаторы"'/>
-          <button class="border flex justify-center items-center w-10 h-full rounded">
+          <a-input placeholder="Basic usage" value='Выберите справочник...'/>
+          <button
+              type="button"
+              @click="showModal('dialyzer')"
+              class="border flex justify-center items-center w-10 h-full rounded">
             <MenuUnfoldOutlined/>
           </button>
         </div>
       </div>
 
+      <!-- Концентратор -->
       <div class="col-span-12 grid grid-cols-12">
         <div class="font-medium col-span-4">
           <a-typography-text class="" strong>Концентратор</a-typography-text>
           <div class="flex items-center gap-2 mt-2">
-            <a-input placeholder="Basic usage" value='Спр. "Концентраторы"'/>
-            <button class="border flex justify-center items-center w-10 py-2 h-full rounded">
+            <a-input placeholder="Basic usage" value='Выберите справочник...'/>
+            <button
+                type="button"
+                @click="showModal('concentrator')"
+                class="border flex justify-center items-center w-10 h-full py-2 rounded">
               <MenuUnfoldOutlined/>
             </button>
           </div>
@@ -62,24 +81,53 @@
         </div>
       </div>
 
+      <!-- Модальное окно -->
+      <div>
+        <a-modal
+            v-model:open="modal.open">
+          <CommonView @handleSelect="handleSelect" :modal-name="modal.tableName"/>
+        </a-modal>
+      </div>
+
 
     </a-form>
   </div>
 </template>
 <script lang="ts" setup>
-import { reactive } from 'vue';
+import {reactive, ref} from 'vue';
+import CommonView from "./CommonView.vue";
 import { UploadOutlined, InboxOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue';
+import { useAppointmentStore } from '../store/appointment/appointmentStore.ts'
+import { SoftType} from "../store/appointment/appointmentTypes.ts";
+
+const useAppointment = useAppointmentStore()
+
+const formState = useAppointment.formState
+
+const modal = reactive({
+  open: false,
+  tableName: '',
+  inputField: ''
+})
+
+const showModal = (datas: string) => {
+  modal.open = true;
+  modal.tableName = datas;
+
+};
+
+const handleSelect = (e) => {
+  console.log(e, 'select');
+  modal.open = false;
+  modal.tableName = ''
+};
 
 const formItemLayout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 14 },
 };
 
-const formState = reactive<Record<string, any>>({
-  'input-number': 3,
-  'checkbox-group': ['A', 'B'],
-  rate: 3.5,
-});
+
 const onFinish = (values: any) => {
   console.log('Success:', values);
 };
@@ -90,31 +138,8 @@ const onFinishFailed = (errorInfo: any) => {
 </script>
 
 <style>
-@media (max-width: 639px) {
-  .container {
-    max-width: 100%;
-  }
-}
-
-/* Для экранов шириной от 640 пикселей до 767 пикселей */
-@media (min-width: 640px) and (max-width: 767px) {
-  .container {
-    max-width: 100%;
-  }
-}
-
-/* Для экранов шириной от 768 пикселей до 1023 пикселей */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .container {
-    max-width: 100%;
-  }
-}
-
-/* Для экранов шириной 1024 пикселя и более */
-@media (min-width: 1024px) {
-  .container {
-    max-width: 960px; /* Ваша желаемая ширина для больших экранов */
-  }
+.ant-modal-footer{
+  display: none;
 }
 </style>
 

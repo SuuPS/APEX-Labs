@@ -1,10 +1,12 @@
 
 <template>
 
-  <div style="padding: 20px; width: 80%">
+  <div class="container">
 
+    <!-- Заголовок -->
     <a-typography-title :level="3">{{ getTitle }}</a-typography-title>
 
+    <!-- Инпут для ввода наименования-->
     <div>
       <a-form
           :model="formState"
@@ -27,6 +29,7 @@
       </a-form>
     </div>
 
+    <!-- Поиск -->
     <div>
       <a-space direction="vertical" style="width: 100%; margin-bottom: 10px">
         <a-input-search
@@ -37,6 +40,7 @@
       </a-space>
     </div>
 
+    <!-- Таблица -->
     <a-table :columns="columns" :data-source="filteredDataSource" bordered>
       <template #bodyCell="{ column, text, record }">
         <template v-if="column.dataIndex === 'name'">
@@ -60,34 +64,49 @@
             </a-popconfirm>
           </span>
             <span v-else style="display: flex; justify-content: space-around;">
-              <a @click="edit(record.key)">
-                <EditOutlined/>
-              </a>
-              <a @click="deleteRow(record.key)">
-                <DeleteOutlined />
-              </a>
+              <div v-if="props.modalName">
+                <a-button @click="selectValue(record)" class="flex items-center justify-around" type="text">
+                  <ArrowRightOutlined />
+                </a-button>
+              </div>
+              <div v-else>
+                <a @click="edit(record.key)">
+                  <EditOutlined/>
+                </a>
+                <a @click="deleteRow(record.key)">
+                  <DeleteOutlined />
+                </a>
+              </div>
             </span>
           </div>
         </template>
       </template>
     </a-table>
   </div>
+
 </template>
 
 <script lang="ts" setup>
-import {onMounted, toRefs, computed, watch} from 'vue';
-import { EditOutlined, DeleteOutlined, DiffOutlined } from '@ant-design/icons-vue';
+import {onMounted, toRefs, computed, watch, ref} from 'vue';
+import { EditOutlined, DeleteOutlined, DiffOutlined, ArrowRightOutlined } from '@ant-design/icons-vue';
 import { useCommonStore } from "../store/common/commonStore.ts";
 import { useMenuStore} from "../store/menu/MenuStore.ts";
+import {DataItem} from "../store/common/commonTypes.ts";
 
-const props = defineProps(['modalName']);
+const emit = defineEmits(['handleSelect'])
+const props = defineProps({
+  modalName: { type: String, required: false }
+})
 
 const commonStore = useCommonStore();
-
 
 const { setCurrentDataSource, add, formState, columns, editableData, edit, save, cancel, deleteRow } = commonStore;
 
 const { filteredDataSource, search, getTitle } = toRefs(commonStore);
+
+const selectValue = (dataItem: DataItem) => {
+  emit('handleSelect', dataItem)
+}
 
 onMounted(()=>{
   setCurrentDataSource( props.modalName ? props.modalName : useMenuStore().pageName)
@@ -96,6 +115,8 @@ onMounted(()=>{
 watch(() => useMenuStore().pageName, (newValue) => {
   setCurrentDataSource(newValue)
 });
+
+
 
 
 </script>

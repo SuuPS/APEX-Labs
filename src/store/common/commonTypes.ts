@@ -12,6 +12,8 @@ export interface DataItem {
 }
 
 export interface DataSources {
+    dialyzer: DataItem[],
+    concentrator: DataItem[],
     spineType: DataItem[];
     spine: DataItem[];
     catheter: DataItem[];

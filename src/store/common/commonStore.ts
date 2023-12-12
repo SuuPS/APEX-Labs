@@ -27,6 +27,40 @@ export const useCommonStore = defineStore('common', () => {
     const currentDataSource = ref<string>('')
 
     const dataSources = reactive<DataSources>({
+        dialyzer: {
+            name: 'Диализатор',
+            datas: [
+                {
+                    key: '1',
+                    name: 'Диализатор №1',
+                },
+                {
+                    key: '2',
+                    name: 'Диализатор №2',
+                },
+                {
+                    key: '3',
+                    name: 'Диализатор №3',
+                }
+            ]
+        },
+        concentrator: {
+            name: 'Концентратор',
+            datas: [
+                {
+                    key: '1',
+                    name: 'Концентратор №1',
+                },
+                {
+                    key: '2',
+                    name: 'Концентратор №2',
+                },
+                {
+                    key: '3',
+                    name: 'Концентратор №3',
+                }
+            ]
+        },
         spineType: {
             name: 'Справочник типы игл',
             datas: [
