@@ -1,11 +1,11 @@
-import { defineStore } from 'pinia';
-import { TableItem, FormType, SoftType } from './appointmentTypes.ts'
-
-import type { TableColumnsType } from 'ant-design-vue';
+import {defineStore} from 'pinia';
+import {FormType, InjectionType, SoftType, TableItem} from './appointmentTypes.ts'
+import type {TableColumnsType} from 'ant-design-vue';
 import {reactive} from "vue";
-import { useRouter, useRoute } from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 import {uuid} from "vue-uuid";
 import {DataItem} from ".//src/store/common/commonTypes.ts";
+
 export const useAppointmentStore = defineStore('appointment', () => {
 
     const route = useRoute();
@@ -30,18 +30,15 @@ export const useAppointmentStore = defineStore('appointment', () => {
 
     const data = reactive<TableItem[]>([]);
 
-    const geDefaultDataItem = (): DataItem => {
-        return {
-            id: uuid.v4(),
-            name: 'Выберите справочник...'
-        };
-    };
-
     const formState = reactive<FormType>({
         id: uuid.v4(),
         softType: SoftType.HD,
-        dialyzer: geDefaultDataItem(),
-        concentrator: geDefaultDataItem(),
+        dialyzer: { id: uuid.v4(), name: ''},
+        concentrator: { id: uuid.v4(), name: ''},
+        concentratorVolume: 0,
+        injectionType: InjectionType.Spine,
+        spine: { id: uuid.v4(), name: ''},
+        catheter: { id: uuid.v4(), name: ''},
     });
 
     for (let i = 0; i < 100; i++) {

@@ -20,9 +20,18 @@ export enum SoftType {
     UF = 2,
 }
 
+export enum InjectionType {
+    Spine = 0,
+    Catheter = 1,
+}
+
 export interface FormType {
     id: string
     softType: SoftType
     dialyzer: DataItem
-    concentrator: DataItem
+    concentrator: DataItem,
+    concentratorVolume: Number
+    injectionType: InjectionType
+    spine: DataItem,
+    catheter: DataItem
 }
