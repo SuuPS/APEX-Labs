@@ -46,8 +46,8 @@
         <template v-if="column.dataIndex === 'name'">
           <div>
             <a-input
-                v-if="editableData[record.key]"
-                v-model:value="editableData[record.key][column.dataIndex]"
+                v-if="editableData[record.id]"
+                v-model:value="editableData[record.id][column.dataIndex]"
                 style="margin: -5px 0"
             />
             <template v-else>
@@ -57,9 +57,9 @@
         </template>
         <template v-else-if="column.dataIndex === 'operation'">
           <div class="editable-row-operations">
-          <span v-if="editableData[record.key]">
-            <a-typography-link @click="save(record.key)">Save</a-typography-link>
-            <a-popconfirm title="Sure to cancel?" @confirm="cancel(record.key)">
+          <span v-if="editableData[record.id]">
+            <a-typography-link @click="save(record.id)">Save</a-typography-link>
+            <a-popconfirm title="Sure to cancel?" @confirm="cancel(record.id)">
               <a>Cancel</a>
             </a-popconfirm>
           </span>
@@ -70,10 +70,10 @@
                 </a-button>
               </div>
               <div v-else>
-                <a @click="edit(record.key)">
+                <a @click="edit(record.id)">
                   <EditOutlined/>
                 </a>
-                <a @click="deleteRow(record.key)">
+                <a @click="deleteRow(record.id)">
                   <DeleteOutlined />
                 </a>
               </div>
@@ -94,6 +94,7 @@ import { useMenuStore} from "../store/menu/MenuStore.ts";
 import {DataItem} from "../store/common/commonTypes.ts";
 
 const emit = defineEmits(['handleSelect'])
+
 const props = defineProps({
   modalName: { type: String, required: false }
 })
@@ -109,13 +110,12 @@ const selectValue = (dataItem: DataItem) => {
 }
 
 onMounted(()=>{
-  setCurrentDataSource( props.modalName ? props.modalName : useMenuStore().pageName)
+  setCurrentDataSource(props.modalName ? props.modalName : useMenuStore().pageName)
 })
 
 watch(() => useMenuStore().pageName, (newValue) => {
   setCurrentDataSource(newValue)
 });
-
 
 
 

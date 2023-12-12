@@ -1,10 +1,13 @@
 import { defineStore } from 'pinia';
-import {DataItem, FormType, SoftType} from './appointmentTypes.ts'
+import { TableItem, FormType, SoftType } from './appointmentTypes.ts'
+
 import type { TableColumnsType } from 'ant-design-vue';
 import {reactive} from "vue";
 import { useRouter, useRoute } from 'vue-router';
 import {uuid} from "vue-uuid";
+import {DataItem} from ".//src/store/common/commonTypes.ts";
 export const useAppointmentStore = defineStore('appointment', () => {
+
     const route = useRoute();
     const router = useRouter();
 
@@ -25,11 +28,20 @@ export const useAppointmentStore = defineStore('appointment', () => {
         },
     ];
 
-    const data = reactive<DataItem[]>([]);
+    const data = reactive<TableItem[]>([]);
+
+    const geDefaultDataItem = (): DataItem => {
+        return {
+            id: uuid.v4(),
+            name: 'Выберите справочник...'
+        };
+    };
 
     const formState = reactive<FormType>({
         id: uuid.v4(),
         softType: SoftType.HD,
+        dialyzer: geDefaultDataItem(),
+        concentrator: geDefaultDataItem(),
     });
 
     for (let i = 0; i < 100; i++) {
@@ -41,6 +53,11 @@ export const useAppointmentStore = defineStore('appointment', () => {
         });
     }
 
+    const setDataIttem = (inputField: string, dataItem: DataItem) => {
+        formState[inputField].id = dataItem.id
+        formState[inputField].name = dataItem.name
+    }
+
     const add = () => {
         router.push({name : 'AppointmentForm'})
     }
@@ -49,6 +66,7 @@ export const useAppointmentStore = defineStore('appointment', () => {
         columns,
         data,
         formState,
-        add
+        add,
+        setDataIttem
     };
 });

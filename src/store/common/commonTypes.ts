@@ -7,7 +7,7 @@ export interface CustomColumn {
 }
 
 export interface DataItem {
-    key: string;
+    id: string;
     name: string;
 }
 

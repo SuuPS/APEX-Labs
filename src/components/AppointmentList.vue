@@ -6,7 +6,13 @@
     <a-typography-title :level="3">Назначения сеанса гемодиализа</a-typography-title>
 
     <a-space>
-      <a-button @click="add" type="primary" class="flex items-center justify-around" ghost >Добавить</a-button>
+      <a-button
+          @click="add"
+          type="primary"
+          class="flex items-center justify-around"
+          ghost>
+        Добавить
+      </a-button>
     </a-space>
 
 

@@ -48,10 +48,10 @@
       <div class="col-span-12 grid grid-cols-12">
         <a-typography-text strong class="font-medium col-span-12">Диализатор</a-typography-text>
         <div class="col-span-4 flex items-center gap-2 mt-2">
-          <a-input placeholder="Basic usage" value='Выберите справочник...'/>
+          <a-input placeholder="Basic usage" :value="formState.dialyzer.name"/>
           <button
               type="button"
-              @click="showModal('dialyzer')"
+              @click="showModal('dialyzer', 'dialyzer')"
               class="border flex justify-center items-center w-10 h-full rounded">
             <MenuUnfoldOutlined/>
           </button>
@@ -63,10 +63,10 @@
         <div class="font-medium col-span-4">
           <a-typography-text class="" strong>Концентратор</a-typography-text>
           <div class="flex items-center gap-2 mt-2">
-            <a-input placeholder="Basic usage" value='Выберите справочник...'/>
+            <a-input placeholder="Basic usage" :value="formState.concentrator.name"/>
             <button
                 type="button"
-                @click="showModal('concentrator')"
+                @click="showModal('concentrator', 'concentrator')"
                 class="border flex justify-center items-center w-10 h-full py-2 rounded">
               <MenuUnfoldOutlined/>
             </button>
@@ -98,29 +98,33 @@ import {reactive, ref} from 'vue';
 import CommonView from "./CommonView.vue";
 import { UploadOutlined, InboxOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue';
 import { useAppointmentStore } from '../store/appointment/appointmentStore.ts'
-import { SoftType} from "../store/appointment/appointmentTypes.ts";
+import { SoftType, modalType } from "../store/appointment/appointmentTypes.ts";
+import { DataItem } from "../store/common/commonTypes.ts";
 
 const useAppointment = useAppointmentStore()
 
-const formState = useAppointment.formState
+const { formState, setDataIttem } = useAppointment
 
-const modal = reactive({
+const modal = reactive<modalType>({
   open: false,
   tableName: '',
-  inputField: ''
+  inputField: '',
 })
 
-const showModal = (datas: string) => {
+const showModal = (tableName: string, inputField: string) => {
   modal.open = true;
-  modal.tableName = datas;
-
+  modal.tableName = tableName;
+  modal.inputField = inputField
 };
 
-const handleSelect = (e) => {
-  console.log(e, 'select');
+const handleSelect = (event) => {
+  console.log(event, 'select');
+  setDataIttem(modal.tableName, event)
+
   modal.open = false;
   modal.tableName = ''
-};
+  modal.inputField = ''
+}
 
 const formItemLayout = {
   labelCol: { span: 6 },

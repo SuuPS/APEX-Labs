@@ -1,11 +1,17 @@
 // appointmentTypes.ts
+import { DataItem } from "../common/commonTypes.ts";
 
+export interface modalType {
+    open: boolean
+    tableName: string
+    inputField: string
+}
 
-export interface DataItem {
-    key: number;
-    name: string;
-    age: number;
-    address: string;
+export interface TableItem {
+    key: number
+    name: string
+    age: number
+    address: string
 }
 
 export enum SoftType {
@@ -15,6 +21,8 @@ export enum SoftType {
 }
 
 export interface FormType {
-    id: string;
-    softType: SoftType;
+    id: string
+    softType: SoftType
+    dialyzer: DataItem
+    concentrator: DataItem
 }

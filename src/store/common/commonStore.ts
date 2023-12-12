@@ -3,11 +3,11 @@ import {reactive, ref, computed} from 'vue';
 import { CustomColumn, DataItem, DataSources } from './commonTypes.ts';
 import {UnwrapRef} from "vue";
 import {cloneDeep} from "lodash-es";
-
+import {uuid} from "vue-uuid";
 export const useCommonStore = defineStore('common', () => {
 
     const formState = reactive<DataItem>({
-        key:'',
+        id: uuid.v4(),
         name: ''
     });
 
@@ -31,15 +31,15 @@ export const useCommonStore = defineStore('common', () => {
             name: 'Диализатор',
             datas: [
                 {
-                    key: '1',
+                    id: uuid.v4(),
                     name: 'Диализатор №1',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: 'Диализатор №2',
                 },
                 {
-                    key: '3',
+                    id: uuid.v4(),
                     name: 'Диализатор №3',
                 }
             ]
@@ -48,15 +48,15 @@ export const useCommonStore = defineStore('common', () => {
             name: 'Концентратор',
             datas: [
                 {
-                    key: '1',
+                    id: uuid.v4(),
                     name: 'Концентратор №1',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: 'Концентратор №2',
                 },
                 {
-                    key: '3',
+                    id: uuid.v4(),
                     name: 'Концентратор №3',
                 }
             ]
@@ -65,19 +65,19 @@ export const useCommonStore = defineStore('common', () => {
             name: 'Справочник типы игл',
             datas: [
                 {
-                    key: '1',
+                    id: uuid.v4(),
                     name: 'Игла размер №1',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: 'Игла размер №2',
                 },
                 {
-                    key: '3',
+                    id: uuid.v4(),
                     name: 'Игла размер №3',
                 },
                 {
-                    key: '4',
+                    id: uuid.v4(),
                     name: 'Игла размер №4',
                 }
             ]
@@ -86,11 +86,11 @@ export const useCommonStore = defineStore('common', () => {
             name: 'Справочник иглы',
             datas: [
                 {
-                    key: '1',
+                    id: uuid.v4(),
                     name: 'Венозные',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: 'Артериальные',
                 }
             ]
@@ -99,23 +99,23 @@ export const useCommonStore = defineStore('common', () => {
             name: 'Справочник катетеры',
             datas: [
                 {
-                    key: '1',
+                    id: uuid.v4(),
                     name: 'Катетер Фолея',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: 'Катетер Малеко',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: 'Катетер Пеццера',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: 'Катетер Тиманна',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: 'Катетер Нелатона',
                 }
             ]
@@ -124,11 +124,11 @@ export const useCommonStore = defineStore('common', () => {
             name: 'Справочник бикарбонат',
             datas: [
                 {
-                    key: '1',
+                    id: uuid.v4(),
                     name: 'граммов',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: 'литров',
                 }
             ]
@@ -137,19 +137,19 @@ export const useCommonStore = defineStore('common', () => {
             name: 'Справочник лекарственные препараты',
             datas: [
                 {
-                    key: '1',
+                    id: uuid.v4(),
                     name: 'Лекарственный препарат №1',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: 'Лекарственный препарат №2',
                 },
                 {
-                    key: '3',
+                    id: uuid.v4(),
                     name: 'Лекарственный препарат №3',
                 },
                 {
-                    key: '4',
+                    id: uuid.v4(),
                     name: 'Лекарственный препарат №4',
                 }
             ]
@@ -158,15 +158,15 @@ export const useCommonStore = defineStore('common', () => {
             name: 'Справочник путь приема',
             datas: [
                 {
-                    key: '1',
+                    id: uuid.v4(),
                     name: 'Перорально',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: 'Подкожно',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: 'Аретериально',
                 }
             ]
@@ -175,15 +175,15 @@ export const useCommonStore = defineStore('common', () => {
             name: 'Справочник дозы препаратов',
             datas: [
                 {
-                    key: '1',
+                    id: uuid.v4(),
                     name: 'мкг',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: 'мл',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: 'мг/кг',
                 }
             ]
@@ -192,15 +192,15 @@ export const useCommonStore = defineStore('common', () => {
             name: 'Справочник кратность приема',
             datas: [
                 {
-                    key: '1',
+                    id: uuid.v4(),
                     name: '1 раз в день',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: '2 раза в день',
                 },
                 {
-                    key: '2',
+                    id: uuid.v4(),
                     name: '3 раза в день',
                 }
             ]
@@ -219,8 +219,8 @@ export const useCommonStore = defineStore('common', () => {
             }
     })
 
-    const setCurrentDataSource = (key: string | null | LocationQueryValue[]) => {
-        currentDataSource.value = key
+    const setCurrentDataSource = (id: string | null | LocationQueryValue[]) => {
+        currentDataSource.value = id
     }
 
     const filteredDataSource = computed(() => {
@@ -243,30 +243,26 @@ export const useCommonStore = defineStore('common', () => {
 
     const add = (item: DataItem) => {
         const currentArray = dataSources[currentDataSource.value];
-
         if (currentArray && currentArray.datas) {
-            const lastItem = currentArray.datas[currentArray.datas.length - 1];
-            const newKey = lastItem ? Number(lastItem.key) + 1 : 1;
-
             currentArray.datas.push({
-                key: newKey.toString(),
+                id: uuid.v4(),
                 name: item.name,
             });
         }
     };
 
-    const edit = (key: string) => {
-        editableData[key] = cloneDeep(dataSources[currentDataSource.value].datas.filter(item => key === item.key)[0]);
+    const edit = (id: string) => {
+        editableData[id] = cloneDeep(dataSources[currentDataSource.value].datas.filter(item => id === item.id)[0]);
     };
-    const save = (key: string) => {
-        Object.assign(dataSources[currentDataSource.value].datas.filter(item => key === item.key)[0], editableData[key]);
-        delete editableData[key];
+    const save = (id: string) => {
+        Object.assign(dataSources[currentDataSource.value].datas.filter(item => id === item.id)[0], editableData[id]);
+        delete editableData[id];
     };
-    const cancel = (key: string) => {
-        delete editableData[key];
+    const cancel = (id: string) => {
+        delete editableData[id];
     };
-    const deleteRow = (key: string) => {
-        const index = dataSources[currentDataSource.value].datas.findIndex(item => item.key === key);
+    const deleteRow = (id: string) => {
+        const index = dataSources[currentDataSource.value].datas.findIndex(item => item.id === id);
         if (index !== -1) {
             dataSources[currentDataSource.value].datas.splice(index, 1);
         }
