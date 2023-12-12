@@ -35,7 +35,7 @@
         <a-form-item
             class="mt-1 mb-0"
             name="radio-button"
-            :rules="[{ required: true, message: 'Please pick an item!' }]">
+            :rules="[{ required: true, message: 'Пожалуйста, выберите программу аппарата!' }]">
           <a-radio-group v-model:value="formState.softType" class="flex items-center gap-1">
             <a-radio-button style="width: 100px" class="flex justify-center items-center" :value="SoftType.HD">HD</a-radio-button>
             <a-radio-button style="width: 100px" class="flex justify-center items-center" :value="SoftType.HDF">HDF</a-radio-button>
@@ -94,14 +94,62 @@
         </a-form-item>
       </div>
 
-      <div class="col-span-12 grid grid-cols-12">
-          <a-input placeholder="Basic usage" :value="formState.dialyzer.name !== '' ? formState.dialyzer.name : 'Спр. Иглы'"/>
+      <!-- Спр. "Иглы" -->
+      <div class="col-span-12 grid grid-cols-12 gap-3">
+        <div class="col-span-3 flex items-center gap-2">
+          <a-input
+              class="w-full"
+              placeholder="Basic usage"
+              :value="formState.spineType.name !== '' ? formState.spineType.name : 'Спр. Иглы...'"/>
+          <button
+              type="button"
+              @click="showModal('spineType', 'spineType')"
+              class="border flex justify-center items-center w-10 h-full rounded">
+            <MenuUnfoldOutlined/>
+          </button>
+        </div>
+
+        <div class="col-span-3 flex items-center gap-2">
+          <a-input
+              class="w-full"
+              placeholder="Basic usage"
+              :value="formState.spine.name !== '' ? formState.spine.name : 'Спр. Типы иглы...'"/>
           <button
               type="button"
               @click="showModal('spine', 'spine')"
               class="border flex justify-center items-center w-10 h-full rounded">
             <MenuUnfoldOutlined/>
           </button>
+        </div>
+      </div>
+
+      <!-- Спр. "Катетеры" -->
+      <div class="col-span-12 grid grid-cols-12 gap-3">
+        <div class="col-span-3 flex items-center gap-2">
+          <a-input
+              class="w-full"
+              placeholder="Basic usage"
+              :value="formState.catheterType.name !== '' ? formState.catheterType.name : 'Спр. Катетеры...'"/>
+          <button
+              type="button"
+              @click="showModal('spineType', 'catheterType')"
+              class="border flex justify-center items-center w-10 h-full rounded">
+            <MenuUnfoldOutlined/>
+          </button>
+        </div>
+
+        <div class="col-span-3 flex items-center gap-2">
+          <a-input
+              class="w-full"
+              placeholder="Basic usage"
+              :value="formState.catheter.name !== '' ? formState.catheter.name : 'Спр. Типы катетеров...'"/>
+          <button
+              type="button"
+              @click="showModal('catheter', 'catheter')"
+              class="border flex justify-center items-center w-10 h-full rounded">
+            <MenuUnfoldOutlined/>
+          </button>
+        </div>
       </div>
 
     </a-form>
@@ -109,8 +157,11 @@
     <!-- Модальное окно -->
     <div>
       <a-modal
+          :after-close="closeModal"
           v-model:open="modal.open">
-        <CommonView @handleSelect="handleSelect" :modal-name="modal.tableName"/>
+        <CommonView
+            @handleSelect="handleSelect"
+            :modal-name="modal.tableName"/>
       </a-modal>
     </div>
   </div>
@@ -143,6 +194,12 @@ const handleSelect = (event) => {
   console.log(event, 'select');
   setDataIttem(modal.tableName, event)
 
+  modal.open = false;
+  modal.tableName = ''
+  modal.inputField = ''
+}
+
+const closeModal = () => {
   modal.open = false;
   modal.tableName = ''
   modal.inputField = ''

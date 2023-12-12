@@ -32,6 +32,8 @@ export interface FormType {
     concentrator: DataItem,
     concentratorVolume: Number
     injectionType: InjectionType
+    spineType: DataItem,
     spine: DataItem,
+    catheterType: DataItem,
     catheter: DataItem
 }

@@ -37,7 +37,9 @@ export const useAppointmentStore = defineStore('appointment', () => {
         concentrator: { id: uuid.v4(), name: ''},
         concentratorVolume: 0,
         injectionType: InjectionType.Spine,
+        spineType: { id: uuid.v4(), name: '' },
         spine: { id: uuid.v4(), name: ''},
+        catheterType: { id: uuid.v4(), name: ''},
         catheter: { id: uuid.v4(), name: ''},
     });
 

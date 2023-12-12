@@ -113,6 +113,10 @@ onMounted(()=>{
   setCurrentDataSource(props.modalName ? props.modalName : useMenuStore().pageName)
 })
 
+watch(() => props.modalName, (newValue) => {
+  setCurrentDataSource(newValue)
+});
+
 watch(() => useMenuStore().pageName, (newValue) => {
   setCurrentDataSource(newValue)
 });

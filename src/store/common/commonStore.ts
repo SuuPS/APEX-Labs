@@ -62,7 +62,7 @@ export const useCommonStore = defineStore('common', () => {
             ]
         },
         spineType: {
-            name: 'Справочник типы игл',
+            name: 'Лекарственные препараты',
             datas: [
                 {
                     id: uuid.v4(),
