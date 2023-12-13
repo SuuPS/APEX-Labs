@@ -1,6 +1,20 @@
 import {defineStore} from 'pinia';
-import {FormType, InjectionType, sessionTableType, SoftType, TableItem} from './appointmentTypes.ts'
+import {
+    FormType,
+    InjectionType,
+    sessionItemsType,
+    sessionTableType,
+    SoftType,
+    TableItem
+} from './appointmentTypes.ts'
 import type {TableColumnsType} from 'ant-design-vue';
+import {
+    BgColorsOutlined,
+    ColumnWidthOutlined,
+    ExperimentOutlined,
+    FundProjectionScreenOutlined,
+    ToolOutlined
+} from '@ant-design/icons-vue'
 import {reactive} from "vue";
 import {useRouter} from 'vue-router';
 import {uuid} from "vue-uuid";
@@ -11,23 +25,6 @@ import dayjs, { Dayjs } from 'dayjs';
 export const useAppointmentStore = defineStore('appointment', () => {
 
     const router = useRouter();
-
-    const columns: TableColumnsType = [
-        { title: 'Column 1', dataIndex: 'address', key: '1', width: 150 },
-        { title: 'Column 2', dataIndex: 'address', key: '2', width: 150 },
-        { title: 'Column 3', dataIndex: 'address', key: '3', width: 150 },
-        { title: 'Column 4', dataIndex: 'address', key: '4', width: 150 },
-        { title: 'Column 5', dataIndex: 'address', key: '5', width: 150 },
-        { title: 'Column 6', dataIndex: 'address', key: '6', width: 150 },
-        { title: 'Column 7', dataIndex: 'address', key: '7', width: 150 },
-        { title: 'Column 8', dataIndex: 'address', key: '8' },
-        {
-            title: 'Action',
-            key: 'operation',
-            fixed: 'right',
-            width: 100,
-        },
-    ];
 
     const data = reactive<TableItem[]>([]);
 
@@ -46,7 +43,7 @@ export const useAppointmentStore = defineStore('appointment', () => {
         patientWeight: 0,
         anticoagulation: '',
         anticoagulationVolume: 0,
-        createdSession: false,
+        createdSession: [],
         medicinalProduct: { id: uuid.v4(), name: ''},
         receptionPath: { id: uuid.v4(), name: ''},
         doses: { id: uuid.v4(), name: ''},
@@ -57,10 +54,76 @@ export const useAppointmentStore = defineStore('appointment', () => {
     });
 
     const createdSession = () => {
-        formState.createdSession = true;
-        message.success('Сеанс гемодиализа назначен', 10);
-    }
 
+        let date:sessionItemsType = {
+            softType: { component: FundProjectionScreenOutlined, title: 'Программа аппарата', text: '' },
+            dialyzer: { component: ColumnWidthOutlined, title: 'Диализатор', text: '' },
+            concentrator: { component: BgColorsOutlined, title: 'Концентратор', text: '' },
+            spineCatheter: { component: ToolOutlined, title: 'Игла/Катетер', text: '' },
+            bicarbonate: { component: ExperimentOutlined, title: 'Бикарбонат', text: '' },
+            anticoagulation: { component: ExperimentOutlined, title: 'Антикоагуляция', text: '' },
+            anticoagulationVolume: { component: ExperimentOutlined, title: 'Сухой Вес пациента', text: '' }
+        }
+
+        if (formState.dialyzer.name === '') {
+            message.error('Выберите диализатор', 10);
+            return;
+        }
+        else {
+            date.dialyzer.text = formState.dialyzer.name
+        }
+
+        if (formState.concentrator.name === '') {
+            message.error('Выберите концентратор', 10);
+            return;
+        }
+        else {
+            date.concentrator.text = formState.concentrator.name
+        }
+
+        if (formState.injectionType === InjectionType.Spine) {
+            if (formState.spineType.name === '' && formState.spine.name === '') {
+                message.error('Выберите иглу и тип иглы', 10);
+                return;
+            }
+            else {
+                date.spineCatheter.text = formState.spineType.name + '- ' + formState.spine.name
+            }
+        }
+        else {
+            if (formState.catheterType.name === '' && formState.catheter.name === '') {
+                message.error('Выберите катетер и тип катетер', 10);
+                return;
+            }
+            else {
+                date.spineCatheter.text = formState.catheterType.name + '-' + formState.catheter.name
+            }
+        }
+
+        if (formState.bicarbonate.name === '') {
+            message.error('Выберите Бикарбонат', 10);
+            return;
+        }
+        else {
+            date.bicarbonate.text = formState.bicarbonate.name
+        }
+
+        if (formState.anticoagulation === '') {
+            message.error('Введите Антикоагуляция', 10);
+            return;
+        }
+        else {
+            date.anticoagulation.text = formState.anticoagulation
+        }
+
+        date.anticoagulationVolume.text = formState.anticoagulation.toString()
+
+
+        message.success('Сеанс гемодиализа назначен', 10);
+
+        formState.createdSession.push(date)
+
+    }
     // setDataIttem функция для присвоения значения из списка модального окна в в поле formState
     const setDataIttem = (inputField: string, dataItem: DataItem) => {
         if(formState[inputField]){
@@ -68,7 +131,6 @@ export const useAppointmentStore = defineStore('appointment', () => {
             formState[inputField].name = dataItem.name
         }
     }
-
     const checkSessionCount = (sessionCount: number) => {
         return formState.sessionCount.includes(sessionCount) ? true : false
     }
@@ -80,7 +142,6 @@ export const useAppointmentStore = defineStore('appointment', () => {
             formState.sessionCount.push(sessionCount)
         }
     }
-
     const addSessionTable = () => {
 
         let sessionTable:sessionTableType = {
@@ -138,15 +199,9 @@ export const useAppointmentStore = defineStore('appointment', () => {
         }
     }
 
-    const add = () => {
-        router.push({name : 'AppointmentForm'})
-    }
-
     return {
-        columns,
         data,
         formState,
-        add,
         setDataIttem,
         changeSessionCount,
         addSessionTable,

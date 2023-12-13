@@ -6,13 +6,11 @@
     <a-typography-title :level="3">Назначения сеанса гемодиализа</a-typography-title>
 
     <a-space>
-      <a-button
-          @click="add"
-          type="primary"
+      <router-link
           class="flex items-center justify-around"
-          ghost>
+          :to="{name : 'AppointmentForm'}">
         Добавить
-      </a-button>
+      </router-link>
     </a-space>
 
 
@@ -38,8 +36,26 @@
 
 <script lang="ts" setup>
 import { useAppointmentStore } from '../store/appointment/appointmentStore.ts'
+import {TableColumnsType} from "ant-design-vue";
 
-const { columns, data, add } = useAppointmentStore()
+const columns: TableColumnsType = [
+  { title: 'Column 1', dataIndex: 'address', key: '1', width: 150 },
+  { title: 'Column 2', dataIndex: 'address', key: '2', width: 150 },
+  { title: 'Column 3', dataIndex: 'address', key: '3', width: 150 },
+  { title: 'Column 4', dataIndex: 'address', key: '4', width: 150 },
+  { title: 'Column 5', dataIndex: 'address', key: '5', width: 150 },
+  { title: 'Column 6', dataIndex: 'address', key: '6', width: 150 },
+  { title: 'Column 7', dataIndex: 'address', key: '7', width: 150 },
+  { title: 'Column 8', dataIndex: 'address', key: '8' },
+  {
+    title: 'Action',
+    key: 'operation',
+    fixed: 'right',
+    width: 100,
+  },
+];
+
+const { data } = useAppointmentStore()
 
 </script>
 
