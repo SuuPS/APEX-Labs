@@ -7,7 +7,7 @@ import {
     SoftType,
     TableItem
 } from './appointmentTypes.ts'
-import type {TableColumnsType} from 'ant-design-vue';
+
 import {
     BgColorsOutlined,
     ColumnWidthOutlined,
@@ -15,16 +15,14 @@ import {
     FundProjectionScreenOutlined,
     ToolOutlined
 } from '@ant-design/icons-vue'
-import {reactive} from "vue";
+import {reactive, h} from "vue";
 import {useRouter} from 'vue-router';
 import {uuid} from "vue-uuid";
 import {DataItem} from "../common/commonTypes.ts";
 import {message} from "ant-design-vue";
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 export const useAppointmentStore = defineStore('appointment', () => {
-
-    const router = useRouter();
 
     const data = reactive<TableItem[]>([]);
 
@@ -43,26 +41,32 @@ export const useAppointmentStore = defineStore('appointment', () => {
         patientWeight: 0,
         anticoagulation: '',
         anticoagulationVolume: 0,
-        createdSession: [],
+        createdSession: {},
         medicinalProduct: { id: uuid.v4(), name: ''},
         receptionPath: { id: uuid.v4(), name: ''},
         doses: { id: uuid.v4(), name: ''},
         sessionCount: [],
         sessionDateStart: dayjs(),
         sessionDateEnd: dayjs().add(1, 'day'),
-        sessionTableResult: []
+        sessionTableResult: [],
+        TreatmentMedicinalProduct: { id: uuid.v4(), name: ''},
+        TreatmentReceptionPath: { id: uuid.v4(), name: ''},
+        TreatmentDoses: { id: uuid.v4(), name: ''},
+        TreatmentReceptionCount: { id: uuid.v4(), name: ''},
+        TreatmentSessionDateStart: dayjs(),
+        TreatmentSessionDateEnd: dayjs().add(1, 'day'),
     });
 
     const createdSession = () => {
 
         let date:sessionItemsType = {
-            softType: { component: FundProjectionScreenOutlined, title: 'Программа аппарата', text: '' },
-            dialyzer: { component: ColumnWidthOutlined, title: 'Диализатор', text: '' },
-            concentrator: { component: BgColorsOutlined, title: 'Концентратор', text: '' },
-            spineCatheter: { component: ToolOutlined, title: 'Игла/Катетер', text: '' },
-            bicarbonate: { component: ExperimentOutlined, title: 'Бикарбонат', text: '' },
-            anticoagulation: { component: ExperimentOutlined, title: 'Антикоагуляция', text: '' },
-            anticoagulationVolume: { component: ExperimentOutlined, title: 'Сухой Вес пациента', text: '' }
+            softType: { component: () => h(FundProjectionScreenOutlined), title: 'Программа аппарата', text: '' },
+            dialyzer: { component: () => h(ColumnWidthOutlined), title: 'Диализатор', text: '' },
+            concentrator: { component: () => h(BgColorsOutlined), title: 'Концентратор', text: '' },
+            spineCatheter: { component: () => h(ToolOutlined), title: 'Игла/Катетер', text: '' },
+            bicarbonate: { component: () => h(ExperimentOutlined), title: 'Бикарбонат', text: '' },
+            anticoagulation: { component: () => h(ExperimentOutlined), title: 'Антикоагуляция', text: '' },
+            anticoagulationVolume: { component: () => h(ExperimentOutlined), title: 'Сухой Вес пациента', text: '' }
         }
 
         if (formState.dialyzer.name === '') {
@@ -121,7 +125,7 @@ export const useAppointmentStore = defineStore('appointment', () => {
 
         message.success('Сеанс гемодиализа назначен', 10);
 
-        formState.createdSession.push(date)
+        formState.createdSession = {...date}
 
     }
     // setDataIttem функция для присвоения значения из списка модального окна в в поле formState
@@ -132,16 +136,17 @@ export const useAppointmentStore = defineStore('appointment', () => {
         }
     }
     const checkSessionCount = (sessionCount: number) => {
-        return formState.sessionCount.includes(sessionCount) ? true : false
+        return formState.sessionCount.includes(sessionCount);
     }
+
     const changeSessionCount = (sessionCount: number) => {
-        if (checkSessionCount(sessionCount)){
-            formState.sessionCount.splice(sessionCount - 1, 1);
-        }
-        else {
-            formState.sessionCount.push(sessionCount)
+        if (checkSessionCount(sessionCount)) {
+            formState.sessionCount = formState.sessionCount.filter(item => item !== sessionCount);
+        } else {
+            formState.sessionCount.push(sessionCount);
         }
     }
+
     const addSessionTable = () => {
 
         let sessionTable:sessionTableType = {

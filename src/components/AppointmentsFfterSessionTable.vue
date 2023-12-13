@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded" style="width: fit-content; border: 1px solid #61b045">
+  <div class="rounded mb-3" style="width: fit-content; border: 1px solid #61b045">
     <a-button
         @click="addSessionTable"
         style="padding: 15px 25px 15px 25px; color: #61b045"
@@ -9,7 +9,9 @@
     </a-button>
   </div>
 
-  <a-table bordered :data-source="formState.sessionTableResult" :columns="columns" class="mt-3">
+  <a-typography-text strong class="font-medium col-span-12 ">Список назначений после сеансов</a-typography-text>
+  <div>Количество сеансов: <span style="color: #1677ff">{{ count }}</span></div>
+  <a-table bordered :data-source="formState.sessionTableResult" :columns="columns" class="mt-1">
     <template #bodyCell="{ column, text, record, index }">
       <template v-if="column.dataIndex === 'operation'">
         <a

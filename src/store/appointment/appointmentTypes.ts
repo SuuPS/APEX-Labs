@@ -1,7 +1,6 @@
 // appointmentTypes.ts
 import { DataItem } from "../common/commonTypes.ts";
 import type { Dayjs } from 'dayjs';
-import { Component } from 'vue';
 
 export interface modalType {
     open: boolean
@@ -38,7 +37,7 @@ export interface sessionTableType {
 }
 
 export interface sessionItemType {
-    component: Component,
+    component: any,
     title: string
     text: string,
 }
@@ -68,9 +67,7 @@ export interface FormType {
     patientWeight: number;
     anticoagulation: string;
     anticoagulationVolume: number;
-
-    createdSession: sessionItemsType[];
-
+    createdSession: any;
     medicinalProduct: DataItem;
     receptionPath: DataItem;
     doses: DataItem;
@@ -78,4 +75,12 @@ export interface FormType {
     sessionDateStart: Dayjs;
     sessionDateEnd: Dayjs;
     sessionTableResult: sessionTableType[]
+
+    TreatmentMedicinalProduct: DataItem;
+    TreatmentReceptionPath: DataItem;
+    TreatmentDoses: DataItem;
+    TreatmentReceptionCount: DataItem;
+    TreatmentSessionDateStart: Dayjs;
+    TreatmentSessionDateEnd: Dayjs;
+
 }
