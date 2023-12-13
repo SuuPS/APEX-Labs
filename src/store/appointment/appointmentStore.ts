@@ -47,6 +47,11 @@ export const useAppointmentStore = defineStore('appointment', () => {
         anticoagulationVolume: 0,
         createdSession: false,
         medicinalProduct: { id: uuid.v4(), name: ''},
+        receptionPath: { id: uuid.v4(), name: ''},
+        doses: { id: uuid.v4(), name: ''},
+        sessionCount: [],
+        sessionDateStart: '',
+        sessionDateEnd: '',
     });
 
     const createdSession = () => {
@@ -56,8 +61,10 @@ export const useAppointmentStore = defineStore('appointment', () => {
 
     // setDataIttem функция для присвоения значения из списка модального окна в в поле formState
     const setDataIttem = (inputField: string, dataItem: DataItem) => {
-        formState[inputField].id = dataItem.id
-        formState[inputField].name = dataItem.name
+        if(formState[inputField]){
+            formState[inputField].id = dataItem.id
+            formState[inputField].name = dataItem.name
+        }
     }
 
     const add = () => {

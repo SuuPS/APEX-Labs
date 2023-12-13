@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import {reactive, ref, computed} from 'vue';
-import { CustomColumn, DataItem, DataSources } from './commonTypes.ts';
+import {CustomColumn, DataItem, DataSources, SoucessColumn} from './commonTypes.ts';
 import {UnwrapRef} from "vue";
 import {cloneDeep} from "lodash-es";
 import {uuid} from "vue-uuid";
@@ -24,7 +24,7 @@ export const useCommonStore = defineStore('common', () => {
         },
     ])
 
-    const currentDataSource = ref<string>('')
+    const currentDataSource = ref<any>('')
 
     const dataSources = reactive<DataSources>({
         dialyzer: {
@@ -219,7 +219,7 @@ export const useCommonStore = defineStore('common', () => {
             }
     })
 
-    const setCurrentDataSource = (id: string | null | LocationQueryValue[]) => {
+    const setCurrentDataSource = (id: string | null) => {
         currentDataSource.value = id
     }
 

@@ -42,5 +42,10 @@ export interface FormType {
     anticoagulationVolume: number;
     createdSession: boolean;
     medicinalProduct: DataItem;
+    receptionPath: DataItem;
+    doses: DataItem;
+    sessionCount: number[];
+    sessionDateStart: string;
+    sessionDateEnd: string;
     [key: string]: DataItem | string | number | boolean;
 }

@@ -289,10 +289,10 @@
       <div class="col-span-12 grid grid-cols-12">
         <a-typography-text strong class="font-medium col-span-12">Лекарственный препарат</a-typography-text>
         <div class="col-span-6 flex items-center gap-2">
-          <a-input placeholder="Basic usage" :value="formState.dialyzer.name !== '' ? formState.dialyzer.name : 'Спр. Диализатор'"/>
+          <a-input placeholder="Basic usage" :value="formState.medicinalProduct.name !== '' ? formState.medicinalProduct.name : 'Спр. препараты'"/>
           <button
               type="button"
-              @click="showModal('dialyzer', 'dialyzer')"
+              @click="showModal('medicinalProducts', 'medicinalProduct')"
               class="border flex justify-center items-center w-10 h-full rounded">
             <MenuUnfoldOutlined/>
           </button>
@@ -303,10 +303,10 @@
       <div class="col-span-3 grid grid-cols-12 mt-2">
         <a-typography-text strong class="font-medium col-span-12">Путь приёма</a-typography-text>
         <div class="col-span-12 flex items-center gap-2">
-          <a-input placeholder="Basic usage" :value="formState.dialyzer.name !== '' ? formState.dialyzer.name : 'Спр. Диализатор'"/>
+          <a-input placeholder="Basic usage" :value="formState.receptionPath.name !== '' ? formState.receptionPath.name : 'Спр. Путь приёма'"/>
           <button
               type="button"
-              @click="showModal('dialyzer', 'dialyzer')"
+              @click="showModal('receptionPath', 'receptionPath')"
               class="border flex justify-center items-center w-10 h-full rounded">
             <MenuUnfoldOutlined/>
           </button>
@@ -317,7 +317,7 @@
       <div class="col-span-3 grid grid-cols-12 mt-2">
         <a-typography-text strong class="font-medium col-span-12">Дозировка</a-typography-text>
         <div class="col-span-12 flex items-center gap-2">
-          <a-input placeholder="Basic usage" :value="formState.dialyzer.name !== '' ? formState.dialyzer.name : 'Спр. Диализатор'"/>
+          <a-input placeholder="Basic usage" :value="formState.dialyzer.name !== '' ? formState.dialyzer.name : 'Спр. Дозы препаратов'"/>
           <button
               type="button"
               @click="showModal('dialyzer', 'dialyzer')"
@@ -357,7 +357,7 @@
       </div>
 
 
-      <!-- Назначения сеанса гемодиализа -->
+      <!-- Список назначений после сеансов -->
       <div class="col-span-12 mt-3">
 
         <!-- Сформировать -->
