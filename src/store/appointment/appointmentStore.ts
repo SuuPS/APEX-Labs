@@ -6,78 +6,43 @@ import {useRouter} from 'vue-router';
 import {uuid} from "vue-uuid";
 import {DataItem} from "../common/commonTypes.ts";
 import {message} from "ant-design-vue";
-import dayjs, {Dayjs} from 'dayjs';
-import {UserType, useUserStore} from "../user/userStore.ts";
+import dayjs, {} from 'dayjs';
+import {useUserStore} from "../user/userStore.ts";
+
 
 export const useAppointmentStore = defineStore('appointment', () => {
 
-    const appointmentDatas = reactive<FormType[]>([]);
+    const router = useRouter();
 
-    const newFormState = (): FormState => {
-        return {
-            id: uuid.v4(),
-            softType: SoftType.HD,
-            dialyzer: { id: uuid.v4(), name: ''},
-            concentrator: { id: uuid.v4(), name: ''},
-            concentratorVolume: 0,
-            injectionType: InjectionType.Spine,
-            spineType: { id: uuid.v4(), name: '' },
-            spine: { id: uuid.v4(), name: ''},
-            catheterType: { id: uuid.v4(), name: ''},
-            catheter: { id: uuid.v4(), name: ''},
-            bicarbonate: { id: uuid.v4(), name: ''},
-            patientWeight: 0,
-            anticoagulation: '',
-            anticoagulationVolume: 0,
-            createdSession: {},
-            medicinalProduct: { id: uuid.v4(), name: ''},
-            receptionPath: { id: uuid.v4(), name: ''},
-            doses: { id: uuid.v4(), name: ''},
-            sessionCount: [],
-            sessionDateStart: dayjs(),
-            sessionDateEnd: dayjs().add(1, 'day'),
-            sessionTableResult: [],
-            TreatmentMedicinalProduct: { id: uuid.v4(), name: ''},
-            TreatmentReceptionPath: { id: uuid.v4(), name: ''},
-            TreatmentDoses: { id: uuid.v4(), name: ''},
-            TreatmentReceptionCount: { id: uuid.v4(), name: ''},
-            TreatmentSessionDateStart: dayjs(),
-            TreatmentSessionDateEnd: dayjs().add(1, 'day'),
-            TreatmentReport: [],
-            recommendationValue: '',
-            recommendations: [],
-            dateAppointment: dayjs(),
-            doctor: useUserStore().user
-        }
-    }
+    const appointmentDatas = reactive<FormType[]>([]);
 
     const formState = reactive<FormType>({
         id: uuid.v4(),
         softType: SoftType.HD,
-        dialyzer: { id: uuid.v4(), name: ''},
-        concentrator: { id: uuid.v4(), name: ''},
+        dialyzer: { id: uuid.v4(), name: '' },
+        concentrator: { id: uuid.v4(), name: '' },
         concentratorVolume: 0,
         injectionType: InjectionType.Spine,
         spineType: { id: uuid.v4(), name: '' },
-        spine: { id: uuid.v4(), name: ''},
-        catheterType: { id: uuid.v4(), name: ''},
-        catheter: { id: uuid.v4(), name: ''},
-        bicarbonate: { id: uuid.v4(), name: ''},
+        spine: { id: uuid.v4(), name: '' },
+        catheterType: { id: uuid.v4(), name: '' },
+        catheter: { id: uuid.v4(), name: '' },
+        bicarbonate: { id: uuid.v4(), name: '' },
         patientWeight: 0,
         anticoagulation: '',
         anticoagulationVolume: 0,
         createdSession: {},
-        medicinalProduct: { id: uuid.v4(), name: ''},
-        receptionPath: { id: uuid.v4(), name: ''},
-        doses: { id: uuid.v4(), name: ''},
+        medicinalProduct: { id: uuid.v4(), name: '' },
+        receptionPath: { id: uuid.v4(), name: '' },
+        doses: { id: uuid.v4(), name: '' },
         sessionCount: [],
         sessionDateStart: dayjs(),
         sessionDateEnd: dayjs().add(1, 'day'),
         sessionTableResult: [],
-        TreatmentMedicinalProduct: { id: uuid.v4(), name: ''},
-        TreatmentReceptionPath: { id: uuid.v4(), name: ''},
-        TreatmentDoses: { id: uuid.v4(), name: ''},
-        TreatmentReceptionCount: { id: uuid.v4(), name: ''},
+        TreatmentMedicinalProduct: { id: uuid.v4(), name: '' },
+        TreatmentReceptionPath: { id: uuid.v4(), name: '' },
+        TreatmentDoses: { id: uuid.v4(), name: '' },
+        TreatmentReceptionCount: { id: uuid.v4(), name: '' },
         TreatmentSessionDateStart: dayjs(),
         TreatmentSessionDateEnd: dayjs().add(1, 'day'),
         TreatmentReport: [],
@@ -285,7 +250,10 @@ export const useAppointmentStore = defineStore('appointment', () => {
     }
 
     const save = () => {
-        appointmentDatas.push()
+        debugger
+        appointmentDatas.push(appointmentDatas.push(formState))
+        message.success('Назначение сохранен', 10);
+        router.push({ name : 'AppointmentForm' })
     }
 
     return {

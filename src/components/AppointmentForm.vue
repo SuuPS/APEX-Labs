@@ -5,8 +5,6 @@
         :model="formState"
         name="validate_other"
         v-bind="formItemLayout"
-        @finishFailed="onFinishFailed"
-        @finish="onFinish"
         class="container border m-auto my-8 rounded p-5 grid grid-cols-12 gap-2">
 
       <!-- Заголовок -->
@@ -39,8 +37,7 @@
         <a-typography-text strong class="font-medium mb-2">Программа аппарата</a-typography-text>
         <a-form-item
             class="mt-1 mb-0"
-            name="radio-button"
-            :rules="[{ required: true, message: 'Пожалуйста, выберите программу аппарата!' }]">
+            name="radio-button">
           <a-radio-group v-model:value="formState.softType" class="flex items-center gap-1">
             <a-radio-button style="width: 100px" class="flex justify-center items-center" :value="SoftType.HD">HD</a-radio-button>
             <a-radio-button style="width: 100px" class="flex justify-center items-center" :value="SoftType.HDF">HDF</a-radio-button>
@@ -486,7 +483,7 @@
 
       <div class="rounded col-span-12 my-5" style="width: fit-content; border: 1px solid #4096ff">
         <a-button
-            @click="createdSession"
+            @click="save"
             style="padding: 15px 25px 15px 25px; color: #4096ff"
             type="text"
             class="flex items-center justify-around border">
@@ -509,6 +506,7 @@
     </div>
   </div>
 </template>
+
 <script lang="ts" setup>
 import {reactive} from 'vue';
 import CommonView from "./CommonView.vue";
@@ -521,7 +519,7 @@ import AppointmentsFfterSessionTable from "./AppointmentsFfterSessionTable.vue";
 const useAppointment = useAppointmentStore()
 
 const { formState, setDataIttem, createdSession, changeSessionCount,
-  checkSessionCount, treatmentReportSave, newRecomendation} = useAppointment
+  checkSessionCount, treatmentReportSave, newRecomendation, save} = useAppointment
 
 const modal = reactive<modalType>({
   open: false,
@@ -553,15 +551,6 @@ const closeModal = () => {
 const formItemLayout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 14 },
-};
-
-
-const onFinish = (values: any) => {
-  console.log('Success:', values);
-};
-
-const onFinishFailed = (errorInfo: any) => {
-  console.log('Failed:', errorInfo);
 };
 </script>
 

@@ -76,7 +76,22 @@ export const useMenuStore = defineStore('menu', () => {
                     title: 'common',
                     name: 'frequencyAdmission',
                     options: false
+                },
+                {
+                    key: '9',
+                    label: 'Диализатор',
+                    title: 'dialyzer',
+                    name: 'dialyzer',
+                    options: false
+                },
+                {
+                    key: '10',
+                    label: 'Концентратор',
+                    title: 'concentrator',
+                    name: 'concentrator',
+                    options: false
                 }
+
             ],
             options: false
         },

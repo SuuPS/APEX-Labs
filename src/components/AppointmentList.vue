@@ -14,11 +14,14 @@
 
     <a-table class="w-full" :columns="columns" :data-source="appointmentDatas" bordered>
       <template #bodyCell="{ column, text, record, index }">
-        <template v-if="['name'].includes(column.dataIndex)">
-          {{ text }}
-        </template>
         <template v-if="['index'].includes(column.dataIndex)">
           {{ index }}
+        </template>
+        <template v-if="['doctor'].includes(column.dataIndex)">
+          {{ record.doctor.surname + ' ' + record.doctor.name + ' ' + record.doctor.patronymic }}
+        </template>
+        <template v-if="['dateAppointment'].includes(column.dataIndex)">
+          {{ record.dateAppointment.format('DD:MM:YYYY') }}
         </template>
         <template v-else-if="column.dataIndex === 'operation'">
           <div class="editable-row-operations">
@@ -26,7 +29,7 @@
                 :to="{name : 'AppointmentForm', query : { id: record.id }}"
                 style="padding: 5px 8px; color: #4096ff"
                 class="flex items-center justify-around border">
-              Добавить назначение
+              Редактировать
             </router-link>
           </div>
         </template>
@@ -37,7 +40,7 @@
 <script lang="ts" setup>
 import { useAppointmentStore } from "../store/appointment/appointmentStore.ts";
 
-const { appointmentDatas } = useAppointmentStore()
+const { appointmentDatas, doctorFio } = useAppointmentStore()
 
 const columns = [
   {
