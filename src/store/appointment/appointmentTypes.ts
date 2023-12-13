@@ -1,5 +1,6 @@
 // appointmentTypes.ts
 import { DataItem } from "../common/commonTypes.ts";
+import type { Dayjs } from 'dayjs';
 
 export interface modalType {
     open: boolean
@@ -25,6 +26,16 @@ export enum InjectionType {
     Catheter = 1,
 }
 
+export interface sessionTableType {
+    medicinalProduct: string;
+    receptionPath: string;
+    doses: string;
+    sessionCount: string;
+    sessionDateStart: string;
+    sessionDateEnd: string;
+    days: string;
+}
+
 export interface FormType {
     id: string;
     softType: SoftType.HD;
@@ -45,7 +56,7 @@ export interface FormType {
     receptionPath: DataItem;
     doses: DataItem;
     sessionCount: number[];
-    sessionDateStart: string;
-    sessionDateEnd: string;
-    [key: string]: DataItem | string | number | boolean;
+    sessionDateStart: Dayjs;
+    sessionDateEnd: Dayjs;
+    sessionTableResult: sessionTableType[]
 }

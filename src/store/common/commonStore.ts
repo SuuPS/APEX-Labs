@@ -210,7 +210,7 @@ export const useCommonStore = defineStore('common', () => {
     const search = ref<string>('');
 
     const getTitle = computed(()=>{
-            const currentArray = dataSources[currentDataSource.value];
+            const currentArray:SoucessColumn = dataSources[currentDataSource.value];
 
             if (currentArray) {
                 return currentArray.name;

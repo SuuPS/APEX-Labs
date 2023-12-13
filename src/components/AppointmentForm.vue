@@ -50,7 +50,7 @@
 
       <!-- Диализатор -->
       <div class="col-span-12 grid grid-cols-12">
-        <a-typography-text strong class="font-medium col-span-12">Диализатор</a-typography-text>
+        <a-typography-text strong class="font-medium col-span-12">Диализатор<span style="color: red">*</span></a-typography-text>
         <div class="col-span-4 flex items-center gap-2">
           <a-input placeholder="Basic usage" :value="formState.dialyzer.name !== '' ? formState.dialyzer.name : 'Спр. Диализатор'"/>
           <button
@@ -65,7 +65,7 @@
       <!-- Концентратор -->
       <div class="col-span-12 grid grid-cols-12">
         <div class="font-medium col-span-4">
-          <a-typography-text class="" strong>Концентратор</a-typography-text>
+          <a-typography-text class="" strong>Концентратор<span style="color: red">*</span></a-typography-text>
           <div class="flex items-center gap-2 mt-2">
             <a-input placeholder="Basic usage" :value="formState.concentrator.name !== '' ? formState.concentrator.name : 'Спр. Концентратор'"/>
             <button
@@ -287,7 +287,10 @@
 
       <!-- Лекарственный препарат -->
       <div class="col-span-12 grid grid-cols-12">
-        <a-typography-text strong class="font-medium col-span-12">Лекарственный препарат</a-typography-text>
+        <a-typography-text strong class="font-medium col-span-12">
+          Лекарственный препарат
+          <span style="color: red">*</span>
+        </a-typography-text>
         <div class="col-span-6 flex items-center gap-2">
           <a-input placeholder="Basic usage" :value="formState.medicinalProduct.name !== '' ? formState.medicinalProduct.name : 'Спр. препараты'"/>
           <button
@@ -301,7 +304,10 @@
 
       <!-- Путь приёма -->
       <div class="col-span-3 grid grid-cols-12 mt-2">
-        <a-typography-text strong class="font-medium col-span-12">Путь приёма</a-typography-text>
+        <a-typography-text strong class="font-medium col-span-12">
+          Путь приёма
+          <span style="color: red">*</span>
+        </a-typography-text>
         <div class="col-span-12 flex items-center gap-2">
           <a-input placeholder="Basic usage" :value="formState.receptionPath.name !== '' ? formState.receptionPath.name : 'Спр. Путь приёма'"/>
           <button
@@ -315,12 +321,12 @@
 
       <!-- Дозировка -->
       <div class="col-span-3 grid grid-cols-12 mt-2">
-        <a-typography-text strong class="font-medium col-span-12">Дозировка</a-typography-text>
+        <a-typography-text strong class="font-medium col-span-12">Дозировка<span style="color: red">*</span></a-typography-text>
         <div class="col-span-12 flex items-center gap-2">
-          <a-input placeholder="Basic usage" :value="formState.dialyzer.name !== '' ? formState.dialyzer.name : 'Спр. Дозы препаратов'"/>
+          <a-input placeholder="Basic usage" :value="formState.doses.name !== '' ? formState.doses.name : 'Спр. Дозы препаратов'"/>
           <button
               type="button"
-              @click="showModal('dialyzer', 'dialyzer')"
+              @click="showModal('doses', 'doses')"
               class="border flex justify-center items-center w-10 h-full rounded">
             <MenuUnfoldOutlined/>
           </button>
@@ -329,11 +335,12 @@
 
       <!-- Номера сеансов: -->
       <div class="col-span-12 mt-2">
-        <a-typography-text strong class="font-medium">Номера сеансов:</a-typography-text>
+        <a-typography-text strong class="font-medium">Номера сеансов: <span style="color: red">*</span></a-typography-text>
         <div class="flex items-center gap-2">
           <div
               v-for="num in 7" :key="num"
-              :class="num === 4 ? 'number-active' : ''"
+              @click="changeSessionCount(num)"
+              :class="checkSessionCount(num) ? 'number-active' : ''"
               class="border w-10 h-10 rounded flex justify-center items-center cursor-pointer">
             {{ num }}
           </div>
@@ -344,86 +351,24 @@
       <div class="col-span-2 mt-2">
         <a-typography-text strong class="font-medium">Начало приёма</a-typography-text>
         <a-date-picker
+            v-model:value="formState.sessionDateStart"
             placeholder="Выберите дату"
-            :format="['DD/MM/YYYY', 'DD/MM/YY']" />
+            :format="['DD/MM/YYYY']" />
       </div>
 
       <!-- Конец приёма -->
       <div class="col-span-2 mt-2">
         <a-typography-text strong class="font-medium">Конец приёма</a-typography-text>
         <a-date-picker
+            v-model:value="formState.sessionDateEnd"
             placeholder="Выберите дату"
             :format="['DD/MM/YYYY', 'DD/MM/YY']" />
       </div>
 
-
       <!-- Список назначений после сеансов -->
       <div class="col-span-12 mt-3">
-
-        <!-- Сформировать -->
-        <div class="rounded" style="width: fit-content; border: 1px solid #61b045">
-          <a-button
-              @click="createdSession"
-              style="padding: 15px 25px 15px 25px; color: #61b045"
-              type="text"
-              class="flex items-center justify-around border">
-            Сформировать
-          </a-button>
-        </div>
-
         <!-- Результат -->
-        <div v-if="formState.createdSession" class="border p-5 flex flex-wrap gap-5 mt-4">
-          <!-- Программа аппарата -->
-          <div class="flex items-center gap-2">
-            <FundProjectionScreenOutlined />
-            <a-typography-text strong class="font-medium mb-2">Программа аппарата: {{formState.softType}}</a-typography-text>
-          </div>
-
-          <!-- Диализатор -->
-          <div class="flex items-center gap-2" v-if="formState.dialyzer.name !== ''">
-            <ColumnWidthOutlined />
-            <a-typography-text strong class="font-medium mb-2">Диализатор: {{formState.dialyzer.name}}</a-typography-text>
-          </div>
-
-          <!-- Концентратор -->
-          <div class="flex items-center gap-2" v-if="formState.concentrator.name !== ''">
-            <BgColorsOutlined />
-            <a-typography-text strong class="font-medium mb-2">Концентратор: {{formState.concentrator.name}}</a-typography-text>
-          </div>
-
-          <!-- Игла/Катетер -->
-          <div class="flex items-center gap-2" v-if="formState.catheter.name !== '' || formState.spine.name !== ''">
-            <ToolOutlined />
-            <a-typography-text v-if="formState.injectionType === InjectionType.Spine" strong class="font-medium mb-2">
-              Игла/Катетер:
-              {{ formState.spineType.name }} - {{ formState.spine.name }}
-            </a-typography-text>
-            <a-typography-text v-else-if="formState.injectionType === InjectionType.Catheter" strong class="font-medium mb-2">
-              Игла/Катетер:
-              {{ formState.catheterType.name }} - {{ formState.catheter.name }}
-            </a-typography-text>
-          </div>
-
-          <!-- Бикарбонат -->
-          <div class="flex items-center gap-2" v-if="formState.bicarbonate.name !== ''">
-            <ExperimentOutlined />
-            <a-typography-text strong class="font-medium mb-2">Бикарбонат: {{ formState.bicarbonate.name }}</a-typography-text>
-          </div>
-
-          <!-- Антикоагуляция -->
-          <div class="flex items-center gap-2" v-if="formState.anticoagulation !== ''">
-            <ExperimentOutlined />
-            <a-typography-text strong class="font-medium mb-2">Антикоагуляция: {{ formState.anticoagulation }}</a-typography-text>
-          </div>
-
-          <!-- Сухой Вес пациента -->
-          <div class="flex items-center gap-2" v-if="formState.anticoagulationVolume > 0">
-            <ExperimentOutlined />
-            <a-typography-text strong class="font-medium mb-2">Сухой Вес пациента: {{ formState.anticoagulationVolume }}</a-typography-text>
-          </div>
-
-        </div>
-
+        <AppointmentsFfterSessionTable/>
       </div>
 
       <!------------------------------------- STEP 2 END ----------------------------------------->
@@ -450,6 +395,7 @@ import {FundProjectionScreenOutlined, MenuUnfoldOutlined, ColumnWidthOutlined,
 import {useAppointmentStore} from '../store/appointment/appointmentStore.ts'
 import {InjectionType, modalType, SoftType} from "../store/appointment/appointmentTypes.ts";
 import {DataItem} from "../store/common/commonTypes.ts";
+import AppointmentsFfterSessionTable from "./AppointmentsFfterSessionTable.vue";
 // import { message } from 'ant-design-vue';
 // const success = () => {
 //   message.success('This is a prompt message for success, and it will disappear in 10 seconds', 10);
@@ -457,7 +403,7 @@ import {DataItem} from "../store/common/commonTypes.ts";
 
 const useAppointment = useAppointmentStore()
 
-const { formState, setDataIttem, createdSession } = useAppointment
+const { formState, setDataIttem, createdSession, changeSessionCount, checkSessionCount, } = useAppointment
 
 const modal = reactive<modalType>({
   open: false,

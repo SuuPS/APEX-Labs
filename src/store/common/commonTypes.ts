@@ -17,14 +17,14 @@ export interface SoucessColumn {
 }
 
 export interface DataSources {
-    dialyzer: SoucessColumn[];
-    concentrator: SoucessColumn[];
-    spineType: SoucessColumn[];
-    spine: SoucessColumn[];
-    catheter: SoucessColumn[];
-    bicarbonate: SoucessColumn[];
-    medicinalProducts: SoucessColumn[];
-    receptionPath: SoucessColumn[];
-    doses: SoucessColumn[];
-    frequencyAdmission: SoucessColumn[];
+    dialyzer: SoucessColumn;
+    concentrator: SoucessColumn;
+    spineType: SoucessColumn;
+    spine: SoucessColumn;
+    catheter: SoucessColumn;
+    bicarbonate: SoucessColumn;
+    medicinalProducts: SoucessColumn;
+    receptionPath: SoucessColumn;
+    doses: SoucessColumn;
+    frequencyAdmission: SoucessColumn;
 }

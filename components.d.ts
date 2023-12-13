@@ -30,6 +30,7 @@ declare module 'vue' {
     APopconfirm: typeof import('ant-design-vue/es')['Popconfirm']
     AppointmentForm: typeof import('./src/components/AppointmentForm.vue')['default']
     AppointmentList: typeof import('./src/components/AppointmentList.vue')['default']
+    AppointmentsFfterSessionTable: typeof import('./src/components/AppointmentsFfterSessionTable.vue')['default']
     ARadio: typeof import('ant-design-vue/es')['Radio']
     ARadioButton: typeof import('ant-design-vue/es')['RadioButton']
     ARadioGroup: typeof import('ant-design-vue/es')['RadioGroup']
