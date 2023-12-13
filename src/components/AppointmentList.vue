@@ -18,10 +18,10 @@
           {{ index }}
         </template>
         <template v-if="['doctor'].includes(column.dataIndex)">
-          {{ record.doctor.surname + ' ' + record.doctor.name + ' ' + record.doctor.patronymic }}
+          {{ record.doctor?.surname + ' ' + record.doctor?.name + ' ' + record.doctor?.patronymic }}
         </template>
         <template v-if="['dateAppointment'].includes(column.dataIndex)">
-          {{ record.dateAppointment.format('DD:MM:YYYY') }}
+          {{ record.dateAppointment?.format('DD:MM:YYYY') }}
         </template>
         <template v-else-if="column.dataIndex === 'operation'">
           <div class="editable-row-operations">

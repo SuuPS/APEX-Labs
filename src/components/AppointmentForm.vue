@@ -169,6 +169,7 @@
           <a-input
               class="w-full"
               placeholder="Basic usage"
+              :addon-after="formState.bicarbonate.measurement"
               :value="formState.bicarbonate.name !== '' ? formState.bicarbonate.name : 'Спр. Катетеры...'"/>
           <button
               type="button"
@@ -184,7 +185,7 @@
         <a-typography-text strong class="font-medium mb-2">Сухой Вес пациента</a-typography-text>
         <a-input-number
             v-model:value="formState.patientWeight"
-            addon-after="кг">
+            :addon-after="formState.bicarbonate.measurement">
         </a-input-number>
       </div>
 

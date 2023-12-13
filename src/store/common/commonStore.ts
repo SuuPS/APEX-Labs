@@ -126,10 +126,12 @@ export const useCommonStore = defineStore('common', () => {
                 {
                     id: uuid.v4(),
                     name: 'граммов',
+                    measurement: 'гр'
                 },
                 {
                     id: uuid.v4(),
                     name: 'литров',
+                    measurement: 'л'
                 }
             ]
         },

@@ -1,5 +1,5 @@
 // appointmentTypes.ts
-import { DataItem } from "../common/commonTypes.ts";
+import {DataItem, ItemBicarbonate} from "../common/commonTypes.ts";
 import type { Dayjs } from 'dayjs';
 import {UserType} from "../user/userStore.ts";
 
@@ -57,7 +57,7 @@ export interface FormType {
     spine: DataItem;
     catheterType: DataItem;
     catheter: DataItem;
-    bicarbonate: DataItem;
+    bicarbonate: ItemBicarbonate;
     patientWeight: number;
     anticoagulation: string;
     anticoagulationVolume: number;

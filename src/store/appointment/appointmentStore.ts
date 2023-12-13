@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia';
-import {FormType, InjectionType, sessionItemsType, sessionTableType, SoftType, TableItem} from './appointmentTypes.ts'
+import {FormType, InjectionType, sessionItemsType, sessionTableType, SoftType} from './appointmentTypes.ts'
 import {BgColorsOutlined, ColumnWidthOutlined, ExperimentOutlined, FundProjectionScreenOutlined, ToolOutlined} from '@ant-design/icons-vue'
 import {reactive, h} from "vue";
 import {useRouter} from 'vue-router';
@@ -27,7 +27,7 @@ export const useAppointmentStore = defineStore('appointment', () => {
         spine: { id: uuid.v4(), name: '' },
         catheterType: { id: uuid.v4(), name: '' },
         catheter: { id: uuid.v4(), name: '' },
-        bicarbonate: { id: uuid.v4(), name: '' },
+        bicarbonate: { id: uuid.v4(), name: '', measurement: '' },
         patientWeight: 0,
         anticoagulation: '',
         anticoagulationVolume: 0,
@@ -129,6 +129,9 @@ export const useAppointmentStore = defineStore('appointment', () => {
         if(formState[inputField]){
             formState[inputField].id = dataItem.id
             formState[inputField].name = dataItem.name
+            if(dataItem.measurement){
+                formState[inputField].measurement = dataItem.measurement
+            }
         }
     }
     const checkSessionCount = (sessionCount: number) => {
@@ -250,10 +253,9 @@ export const useAppointmentStore = defineStore('appointment', () => {
     }
 
     const save = () => {
-        debugger
         appointmentDatas.push(appointmentDatas.push(formState))
-        message.success('Назначение сохранен', 10);
         router.push({ name : 'AppointmentForm' })
+        message.success('Назначение сохранен', 10);
     }
 
     return {

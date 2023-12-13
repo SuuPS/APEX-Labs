@@ -11,6 +11,17 @@ export interface DataItem {
     name: string;
 }
 
+export interface ItemBicarbonate {
+    id: string;
+    name: string;
+    measurement: string;
+}
+
+export interface DataItemBicarbonate {
+    name: string;
+    datas: ItemBicarbonate[]
+}
+
 export interface SoucessColumn {
     name: string,
     datas: DataItem[]
@@ -22,7 +33,7 @@ export interface DataSources {
     spineType: SoucessColumn;
     spine: SoucessColumn;
     catheter: SoucessColumn;
-    bicarbonate: SoucessColumn;
+    bicarbonate: DataItemBicarbonate;
     medicinalProducts: SoucessColumn;
     receptionPath: SoucessColumn;
     doses: SoucessColumn;
