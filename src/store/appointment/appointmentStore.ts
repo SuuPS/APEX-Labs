@@ -1,30 +1,55 @@
 import {defineStore} from 'pinia';
-import {
-    FormType,
-    InjectionType,
-    sessionItemsType,
-    sessionTableType,
-    SoftType,
-    TableItem
-} from './appointmentTypes.ts'
-
-import {
-    BgColorsOutlined,
-    ColumnWidthOutlined,
-    ExperimentOutlined,
-    FundProjectionScreenOutlined,
-    ToolOutlined
-} from '@ant-design/icons-vue'
+import {FormType, InjectionType, sessionItemsType, sessionTableType, SoftType, TableItem} from './appointmentTypes.ts'
+import {BgColorsOutlined, ColumnWidthOutlined, ExperimentOutlined, FundProjectionScreenOutlined, ToolOutlined} from '@ant-design/icons-vue'
 import {reactive, h} from "vue";
 import {useRouter} from 'vue-router';
 import {uuid} from "vue-uuid";
 import {DataItem} from "../common/commonTypes.ts";
 import {message} from "ant-design-vue";
-import dayjs from 'dayjs';
+import dayjs, {Dayjs} from 'dayjs';
+import {UserType, useUserStore} from "../user/userStore.ts";
 
 export const useAppointmentStore = defineStore('appointment', () => {
 
-    const data = reactive<TableItem[]>([]);
+    const appointmentDatas = reactive<FormType[]>([]);
+
+    const newFormState = (): FormState => {
+        return {
+            id: uuid.v4(),
+            softType: SoftType.HD,
+            dialyzer: { id: uuid.v4(), name: ''},
+            concentrator: { id: uuid.v4(), name: ''},
+            concentratorVolume: 0,
+            injectionType: InjectionType.Spine,
+            spineType: { id: uuid.v4(), name: '' },
+            spine: { id: uuid.v4(), name: ''},
+            catheterType: { id: uuid.v4(), name: ''},
+            catheter: { id: uuid.v4(), name: ''},
+            bicarbonate: { id: uuid.v4(), name: ''},
+            patientWeight: 0,
+            anticoagulation: '',
+            anticoagulationVolume: 0,
+            createdSession: {},
+            medicinalProduct: { id: uuid.v4(), name: ''},
+            receptionPath: { id: uuid.v4(), name: ''},
+            doses: { id: uuid.v4(), name: ''},
+            sessionCount: [],
+            sessionDateStart: dayjs(),
+            sessionDateEnd: dayjs().add(1, 'day'),
+            sessionTableResult: [],
+            TreatmentMedicinalProduct: { id: uuid.v4(), name: ''},
+            TreatmentReceptionPath: { id: uuid.v4(), name: ''},
+            TreatmentDoses: { id: uuid.v4(), name: ''},
+            TreatmentReceptionCount: { id: uuid.v4(), name: ''},
+            TreatmentSessionDateStart: dayjs(),
+            TreatmentSessionDateEnd: dayjs().add(1, 'day'),
+            TreatmentReport: [],
+            recommendationValue: '',
+            recommendations: [],
+            dateAppointment: dayjs(),
+            doctor: useUserStore().user
+        }
+    }
 
     const formState = reactive<FormType>({
         id: uuid.v4(),
@@ -55,6 +80,11 @@ export const useAppointmentStore = defineStore('appointment', () => {
         TreatmentReceptionCount: { id: uuid.v4(), name: ''},
         TreatmentSessionDateStart: dayjs(),
         TreatmentSessionDateEnd: dayjs().add(1, 'day'),
+        TreatmentReport: [],
+        recommendationValue: '',
+        recommendations: [],
+        dateAppointment: dayjs(),
+        doctor: useUserStore().user
     });
 
     const createdSession = () => {
@@ -128,6 +158,7 @@ export const useAppointmentStore = defineStore('appointment', () => {
         formState.createdSession = {...date}
 
     }
+
     // setDataIttem функция для присвоения значения из списка модального окна в в поле formState
     const setDataIttem = (inputField: string, dataItem: DataItem) => {
         if(formState[inputField]){
@@ -198,20 +229,76 @@ export const useAppointmentStore = defineStore('appointment', () => {
         formState.sessionTableResult.push(sessionTable)
     }
 
+    const treatmentReportSave = () => {
+
+        let report:string = ''
+
+        if (formState.TreatmentMedicinalProduct.name === '') {
+            message.error('Выберите лекарственный препарат', 10);
+            return;
+        }
+        else {
+            report += formState.TreatmentMedicinalProduct.name + ' - '
+        }
+
+        if (formState.TreatmentReceptionPath.name === '') {
+            message.error('Выберите путь приёма', 10);
+            return;
+        }
+        else {
+            report += formState.TreatmentReceptionPath.name + ' - '
+        }
+
+        if (formState.TreatmentDoses.name === '') {
+            message.error('Выберите дозу', 10);
+            return;
+        }
+        else {
+            report += formState.TreatmentDoses.name + ' - '
+        }
+
+        if (formState.TreatmentReceptionCount.name === '') {
+            message.error('Выберите кратность приема', 10);
+            return;
+        }
+        else {
+            report += formState.TreatmentReceptionCount.name + ' - '
+        }
+
+        report += `с ${formState.sessionDateStart.format('DD-MM-YYYY')} по ${report = formState.sessionDateEnd.format('DD-MM-YYYY')} -`
+        report += formState.sessionDateEnd.diff(formState.sessionDateStart, 'days').toString()
+        message.success('Лечение  сформированы', 10);
+
+        formState.TreatmentReport.push(report)
+    }
+
     const delSessionTable = (index: number) => {
         if (formState.sessionTableResult.length > 0) {
             formState.sessionTableResult.splice(index, 1);
         }
     }
 
+    const newRecomendation = () => {
+        if (formState.recommendationValue !== '') {
+            formState.recommendations.push(formState.recommendationValue)
+        }
+    }
+
+    const save = () => {
+        appointmentDatas.push()
+    }
+
     return {
-        data,
+        save,
+        appointmentDatas,
         formState,
         setDataIttem,
         changeSessionCount,
         addSessionTable,
         delSessionTable,
         checkSessionCount,
-        createdSession
+        createdSession,
+        treatmentReportSave,
+        newRecomendation
     };
 });

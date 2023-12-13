@@ -1,13 +1,13 @@
 
 <template>
-  <div class="">
+  <div class="mb-10">
     <a-form
         :model="formState"
         name="validate_other"
         v-bind="formItemLayout"
         @finishFailed="onFinishFailed"
         @finish="onFinish"
-        class="container border m-auto mt-8 rounded p-5 grid grid-cols-12 gap-2">
+        class="container border m-auto my-8 rounded p-5 grid grid-cols-12 gap-2">
 
       <!-- Заголовок -->
       <div class="col-span-12 grid grid-cols-12 mt-3">
@@ -25,12 +25,13 @@
         </div>
       </div>
 
-
       <!------------------------------------- STEP 1 START ----------------------------------------->
 
       <!-- Назначения сеанса гемодиализа -->
       <div class="col-span-12">
-        <a-typography-title :level="3">Назначения сеанса гемодиализа</a-typography-title>
+        <a-typography-title :level="3">
+          <span style="color: #4096ff">Назначения</span>
+          сеанса гемодиализа</a-typography-title>
       </div>
 
       <!-- Программа аппарата -->
@@ -102,12 +103,12 @@
       <div class="col-span-12 grid grid-cols-12 gap-3">
         <div class="col-span-3 flex items-center gap-2">
           <a-input
-              :disabled="formState.injectionType === InjectionType.Catheter"
+              :disabled="formState.injectionType !== InjectionType.Spine"
               class="w-full"
               placeholder="Basic usage"
               :value="formState.spineType.name !== '' ? formState.spineType.name : 'Спр. Иглы...'"/>
           <button
-              :disabled="formState.injectionType === InjectionType.Catheter"
+              :disabled="formState.injectionType !== InjectionType.Spine"
               type="button"
               @click="showModal('spineType', 'spineType')"
               class="border flex justify-center items-center w-10 h-full rounded">
@@ -117,12 +118,12 @@
 
         <div class="col-span-3 flex items-center gap-2">
           <a-input
-              :disabled="formState.injectionType === 1"
+              :disabled="formState.injectionType !== InjectionType.Spine"
               class="w-full"
               placeholder="Basic usage"
               :value="formState.spine.name !== '' ? formState.spine.name : 'Спр. Типы иглы...'"/>
           <button
-              :disabled="formState.injectionType === 1"
+              :disabled="formState.injectionType !== InjectionType.Spine"
               type="button"
               @click="showModal('spine', 'spine')"
               class="border flex justify-center items-center w-10 h-full rounded">
@@ -135,12 +136,12 @@
       <div class="col-span-12 grid grid-cols-12 gap-3 mb-2">
         <div class="col-span-3 flex items-center gap-2">
           <a-input
-              :disabled="formState.injectionType === 0"
+              :disabled="formState.injectionType === InjectionType.Spine"
               class="w-full"
               placeholder="Basic usage"
               :value="formState.catheterType.name !== '' ? formState.catheterType.name : 'Спр. Катетеры...'"/>
           <button
-              :disabled="formState.injectionType === 0"
+              :disabled="formState.injectionType === InjectionType.Spine"
               type="button"
               @click="showModal('spineType', 'catheterType')"
               class="border flex justify-center items-center w-10 h-full rounded">
@@ -208,7 +209,6 @@
 
       <!-- Назначения сеанса гемодиализа -->
       <div class="col-span-12 mt-3 mb-3">
-
         <!-- Сформировать сеанс -->
         <div class="rounded" style="width: fit-content; border: 1px solid #61b045">
           <a-button
@@ -219,10 +219,8 @@
             Сформировать сеанс
           </a-button>
         </div>
-
         <!-- Результат -->
         <div class="border p-5 flex flex-wrap gap-5 mt-4">
-          <!-- Программа аппарата -->
           <div
               v-for="(item, index) in formState.createdSession" :key="index"
               class="flex items-center gap-2">
@@ -230,14 +228,10 @@
             <a-typography-text strong class="font-medium mb-2">{{item.title}}: {{item.text}}</a-typography-text>
           </div>
         </div>
-
       </div>
-
       <!------------------------------------- STEP 1 END ----------------------------------------->
 
       <!------------------------------------- STEP 2 START ----------------------------------------->
-
-
       <!-- Назначения после сеанса -->
       <div class="col-span-12 border-t pt-5">
         <a-typography-title :level="3">Назначения после сеанса</a-typography-title>
@@ -328,12 +322,9 @@
         <!-- Результат -->
         <AppointmentsFfterSessionTable/>
       </div>
-
       <!------------------------------------- STEP 2 END ----------------------------------------->
 
       <!------------------------------------- STEP 3 START ----------------------------------------->
-
-
       <!-- Назначения после сеанса -->
       <div class="col-span-12 border-t pt-5">
         <a-typography-title :level="3">Лечение на дому</a-typography-title>
@@ -387,6 +378,7 @@
         </div>
       </div>
 
+      <!-- Кратность прием -->
       <div class="col-span-12 grid grid-cols-12 gap-3">
         <!-- Кратность приема -->
         <div class="col-span-3 grid grid-cols-12 mt-2">
@@ -426,6 +418,7 @@
         <!-- Добавить -->
         <div class="rounded mb-3 border" style="width: fit-content">
           <a-button
+              @click="treatmentReportSave"
               style="padding: 15px 25px 15px 25px"
               type="text"
               class="flex items-center justify-around border">
@@ -435,13 +428,73 @@
 
         <!-- Результат -->
         <div class="border p-5 flex flex-wrap gap-5 mt-4">
+          <div class="w-full border-b pb-2" v-for="(report, index) in formState.TreatmentReport" :key="index">
+            {{ report }}
+          </div>
+        </div>
+      </div>
+      <!------------------------------------- STEP 3 END ----------------------------------------->
 
 
+      <!------------------------------------- STEP 4 START ----------------------------------------->
+      <!-- Рекомендации -->
+      <div class="col-span-12 border-t pt-5">
+        <a-typography-title :level="3">Рекомендации</a-typography-title>
+      </div>
+
+      <!-- Текст рекомендации пациенту -->
+      <div class="col-span-7">
+        <div class="w-full flex items-center gap-2">
+          <a-input
+              placeholder="Текст рекомендации пациенту..."
+              v-model:value="formState.recommendationValue"/>
+          <!-- Добавить -->
+          <div class="rounded border" style="width: fit-content">
+            <a-button
+                @click="newRecomendation"
+                style="padding: 15px 25px 15px 25px"
+                type="text"
+                class="flex items-center justify-around border">
+              <PlusCircleOutlined/>
+            </a-button>
+          </div>
         </div>
       </div>
 
-      <!------------------------------------- STEP 3 END ----------------------------------------->
+      <!-- Рекомендации пациенту -->
+      <div class="col-span-7 mt-3">
+        <!-- Результат -->
+        <div class="border p-5 flex flex-wrap gap-5 mt-4">
+          <div class="w-full pb-2" v-for="(recommendation, index) in formState.recommendations" :key="index">
+            {{ recommendation }}
+          </div>
+          <a-typography-text v-if="formState.recommendations.length === 0" strong class="font-medium">Рекомендаций нет</a-typography-text>
+        </div>
+      </div>
 
+      <!-- Данные о назначении -->
+      <div class="col-span-7 flex items-center gap-5 mt-3">
+        <div class="flex items-center gap-1">
+          <CalendarOutlined />
+          {{ formState.dateAppointment.format('DD:MM:YYYY') }}
+        </div>
+        <div class="flex items-center gap-1">
+          <UserOutlined/>
+          {{ `${formState.doctor.surname} ${formState.doctor.name} ${formState.doctor.patronymic} : ${formState.doctor.role}` }}
+        </div>
+      </div>
+
+      <div class="rounded col-span-12 my-5" style="width: fit-content; border: 1px solid #4096ff">
+        <a-button
+            @click="createdSession"
+            style="padding: 15px 25px 15px 25px; color: #4096ff"
+            type="text"
+            class="flex items-center justify-around border">
+          Сохранить назначение
+        </a-button>
+      </div>
+
+      <!------------------------------------- STEP 4 END ----------------------------------------->
     </a-form>
 
     <!-- Модальное окно -->
@@ -459,7 +512,7 @@
 <script lang="ts" setup>
 import {reactive} from 'vue';
 import CommonView from "./CommonView.vue";
-import {MenuUnfoldOutlined} from '@ant-design/icons-vue';
+import {MenuUnfoldOutlined, PlusCircleOutlined, UserOutlined, CalendarOutlined} from '@ant-design/icons-vue';
 import {useAppointmentStore} from '../store/appointment/appointmentStore.ts'
 import {InjectionType, modalType, SoftType} from "../store/appointment/appointmentTypes.ts";
 import {DataItem} from "../store/common/commonTypes.ts";
@@ -467,7 +520,8 @@ import AppointmentsFfterSessionTable from "./AppointmentsFfterSessionTable.vue";
 
 const useAppointment = useAppointmentStore()
 
-const { formState, setDataIttem, createdSession, changeSessionCount, checkSessionCount, } = useAppointment
+const { formState, setDataIttem, createdSession, changeSessionCount,
+  checkSessionCount, treatmentReportSave, newRecomendation} = useAppointment
 
 const modal = reactive<modalType>({
   open: false,

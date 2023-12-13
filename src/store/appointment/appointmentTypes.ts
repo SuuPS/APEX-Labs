@@ -1,18 +1,12 @@
 // appointmentTypes.ts
 import { DataItem } from "../common/commonTypes.ts";
 import type { Dayjs } from 'dayjs';
+import {UserType} from "../user/userStore.ts";
 
 export interface modalType {
     open: boolean
     tableName: string
     inputField: string
-}
-
-export interface TableItem {
-    key: number
-    name: string
-    age: number
-    address: string
 }
 
 export enum SoftType {
@@ -82,5 +76,12 @@ export interface FormType {
     TreatmentReceptionCount: DataItem;
     TreatmentSessionDateStart: Dayjs;
     TreatmentSessionDateEnd: Dayjs;
+    TreatmentReport: string[]
+
+    recommendationValue: string,
+    recommendations: string[]
+
+    dateAppointment: Dayjs,
+    doctor: UserType
 
 }

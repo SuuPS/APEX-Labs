@@ -71,7 +71,7 @@ const columns = [
   },
 ];
 
-const count = computed(() => formState.sessionTableResult.length + 1);
+const count = computed(() => formState.sessionTableResult.length);
 
 </script>
 

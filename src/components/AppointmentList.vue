@@ -1,66 +1,73 @@
 
 <template>
+  <div class="container">
+    <a-typography-title class="w-full" :level="3">Назначения сеанса гемодиализа</a-typography-title>
 
-  <div style="padding: 20px; width: 80%">
-
-    <a-typography-title :level="3">Назначения сеанса гемодиализа</a-typography-title>
-
-    <a-space>
+    <div class="rounded col-span-12 my-5" style="width: fit-content; border: 1px solid #4096ff">
       <router-link
-          class="flex items-center justify-around"
-          :to="{name : 'AppointmentForm'}">
-        Добавить
+          :to="{name : 'AppointmentForm'}"
+          style="padding: 5px 8px; color: #4096ff"
+          class="flex items-center justify-around border">
+        Добавить назначение
       </router-link>
-    </a-space>
-
-
-    <div>
-      <a-space direction="vertical" style="width: 100%; margin: 10px 0px 10px 0px">
-        <a-input-search
-            placeholder="Поиск..."
-            enter-button
-        />
-      </a-space>
     </div>
 
-    <a-table :columns="columns" :data-source="data" :scroll="{ x: 1500, y: 300 }">
-      <template #bodyCell="{ column }">
-        <template v-if="column.key === 'operation'">
-          <a>action</a>
+    <a-table class="w-full" :columns="columns" :data-source="appointmentDatas" bordered>
+      <template #bodyCell="{ column, text, record, index }">
+        <template v-if="['name'].includes(column.dataIndex)">
+          {{ text }}
+        </template>
+        <template v-if="['index'].includes(column.dataIndex)">
+          {{ index }}
+        </template>
+        <template v-else-if="column.dataIndex === 'operation'">
+          <div class="editable-row-operations">
+            <router-link
+                :to="{name : 'AppointmentForm', query : { id: record.id }}"
+                style="padding: 5px 8px; color: #4096ff"
+                class="flex items-center justify-around border">
+              Добавить назначение
+            </router-link>
+          </div>
         </template>
       </template>
     </a-table>
-
   </div>
 </template>
-
 <script lang="ts" setup>
-import { useAppointmentStore } from '../store/appointment/appointmentStore.ts'
-import {TableColumnsType} from "ant-design-vue";
+import { useAppointmentStore } from "../store/appointment/appointmentStore.ts";
 
-const columns: TableColumnsType = [
-  { title: 'Column 1', dataIndex: 'address', key: '1', width: 150 },
-  { title: 'Column 2', dataIndex: 'address', key: '2', width: 150 },
-  { title: 'Column 3', dataIndex: 'address', key: '3', width: 150 },
-  { title: 'Column 4', dataIndex: 'address', key: '4', width: 150 },
-  { title: 'Column 5', dataIndex: 'address', key: '5', width: 150 },
-  { title: 'Column 6', dataIndex: 'address', key: '6', width: 150 },
-  { title: 'Column 7', dataIndex: 'address', key: '7', width: 150 },
-  { title: 'Column 8', dataIndex: 'address', key: '8' },
+const { appointmentDatas } = useAppointmentStore()
+
+const columns = [
   {
-    title: 'Action',
-    key: 'operation',
-    fixed: 'right',
-    width: 100,
+    title: '№',
+    dataIndex: 'index',
+    width: '10%',
+  },
+  {
+    title: 'ФИО врача',
+    dataIndex: 'doctor',
+    width: '25%',
+  },
+  {
+    title: 'Дата записи',
+    dataIndex: 'dateAppointment',
+    width: '15%',
+  },
+  {
+    title: 'operation',
+    dataIndex: 'operation',
   },
 ];
 
-const { data } = useAppointmentStore()
 
 </script>
-
 <style scoped>
 .editable-row-operations a {
   margin-right: 8px;
 }
 </style>
+
+
+
