@@ -2,13 +2,13 @@ import {defineStore} from 'pinia';
 import {FormType, InjectionType, SoftType, TableItem} from './appointmentTypes.ts'
 import type {TableColumnsType} from 'ant-design-vue';
 import {reactive} from "vue";
-import {useRoute, useRouter} from 'vue-router';
+import {useRouter} from 'vue-router';
 import {uuid} from "vue-uuid";
-import {DataItem} from ".//src/store/common/commonTypes.ts";
+import {DataItem} from "../common/commonTypes.ts";
+import {message} from "ant-design-vue";
 
 export const useAppointmentStore = defineStore('appointment', () => {
 
-    const route = useRoute();
     const router = useRouter();
 
     const columns: TableColumnsType = [
@@ -41,17 +41,20 @@ export const useAppointmentStore = defineStore('appointment', () => {
         spine: { id: uuid.v4(), name: ''},
         catheterType: { id: uuid.v4(), name: ''},
         catheter: { id: uuid.v4(), name: ''},
+        bicarbonate: { id: uuid.v4(), name: ''},
+        patientWeight: 0,
+        anticoagulation: '',
+        anticoagulationVolume: 0,
+        createdSession: false,
+        medicinalProduct: { id: uuid.v4(), name: ''},
     });
 
-    for (let i = 0; i < 100; i++) {
-        data.push({
-            key: i,
-            name: `Edrward ${i}`,
-            age: 32,
-            address: `London Park no. ${i}`,
-        });
+    const createdSession = () => {
+        formState.createdSession = true;
+        message.success('This is a prompt message for success, and it will disappear in 10 seconds', 10);
     }
 
+    // setDataIttem функция для присвоения значения из списка модального окна в в поле formState
     const setDataIttem = (inputField: string, dataItem: DataItem) => {
         formState[inputField].id = dataItem.id
         formState[inputField].name = dataItem.name
@@ -66,6 +69,7 @@ export const useAppointmentStore = defineStore('appointment', () => {
         data,
         formState,
         add,
-        setDataIttem
+        setDataIttem,
+        createdSession
     };
 });

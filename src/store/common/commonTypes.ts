@@ -11,15 +11,20 @@ export interface DataItem {
     name: string;
 }
 
+export interface SoucessColumn {
+    name: string,
+    datas: DataItem[]
+}
+
 export interface DataSources {
-    dialyzer: DataItem[],
-    concentrator: DataItem[],
-    spineType: DataItem[];
-    spine: DataItem[];
-    catheter: DataItem[];
-    bicarbonate: DataItem[];
-    medicinalProducts: DataItem[];
-    receptionPath: DataItem[];
-    doses: DataItem[];
-    frequencyAdmission: DataItem[];
+    dialyzer: SoucessColumn[];
+    concentrator: SoucessColumn[];
+    spineType: SoucessColumn[];
+    spine: SoucessColumn[];
+    catheter: SoucessColumn[];
+    bicarbonate: SoucessColumn[];
+    medicinalProducts: SoucessColumn[];
+    receptionPath: SoucessColumn[];
+    doses: SoucessColumn[];
+    frequencyAdmission: SoucessColumn[];
 }

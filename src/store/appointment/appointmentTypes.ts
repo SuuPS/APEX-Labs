@@ -15,9 +15,9 @@ export interface TableItem {
 }
 
 export enum SoftType {
-    HD = 0,
-    HDF = 1,
-    UF = 2,
+    HD = 'HD',
+    HDF = 'HDF',
+    UF = 'UF',
 }
 
 export enum InjectionType {
@@ -26,14 +26,21 @@ export enum InjectionType {
 }
 
 export interface FormType {
-    id: string
-    softType: SoftType
-    dialyzer: DataItem
-    concentrator: DataItem,
-    concentratorVolume: Number
-    injectionType: InjectionType
-    spineType: DataItem,
-    spine: DataItem,
-    catheterType: DataItem,
-    catheter: DataItem
+    id: string;
+    softType: SoftType.HD;
+    dialyzer: DataItem;
+    concentrator: DataItem;
+    concentratorVolume: number;
+    injectionType: InjectionType.Spine;
+    spineType: DataItem;
+    spine: DataItem;
+    catheterType: DataItem;
+    catheter: DataItem;
+    bicarbonate: DataItem;
+    patientWeight: number;
+    anticoagulation: string;
+    anticoagulationVolume: number;
+    createdSession: boolean;
+    medicinalProduct: DataItem;
+    [key: string]: DataItem | string | number | boolean;
 }
