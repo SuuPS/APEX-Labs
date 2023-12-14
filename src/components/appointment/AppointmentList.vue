@@ -40,7 +40,7 @@
 <script lang="ts" setup>
 import { useAppointmentStore } from "../../store/appointment/appointmentStore.ts";
 
-const { appointmentDatas, doctorFio } = useAppointmentStore()
+const { appointmentDatas } = useAppointmentStore()
 
 const columns = [
   {
