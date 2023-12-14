@@ -13,11 +13,6 @@ export const useMenuStore = defineStore('menu', () => {
 
     const loading: Ref<boolean> = ref(false)
 
-    const isTabletResolution = computed(() => {
-        // Здесь можно использовать window.innerWidth или другие методы для определения разрешения
-        return window.innerWidth <= 768; // Используйте нужное вам условие
-    });
-
     const menuItems = reactive<MenuItem[]>([
         {
             key: 'sub1',
@@ -180,7 +175,6 @@ export const useMenuStore = defineStore('menu', () => {
         selectedPage,
         menu,
         menuItems,
-        loading,
-        isTabletResolution
+        loading
     };
 });

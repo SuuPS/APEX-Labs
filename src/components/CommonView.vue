@@ -12,10 +12,10 @@
           :model="formState"
           name="nest-messages"
           :validate-messages="{required: '${label} обязателен!'}"
-          @finish="add"
-      >
+          @finish="add">
+        <a-typography-text strong class="font-medium">Наименование справочника<span style="color: red"> *</span></a-typography-text>
         <div style="display: flex; align-items: center; gap: 5px">
-          <a-form-item style="width: 100%" :name="['name']" label="Наименование справочника" :rules="[{ required: true }]">
+          <a-form-item class="w-full" :name="['name']" :rules="[{ required: true }]">
             <a-input v-model:value="formState.name" />
           </a-form-item>
 

@@ -98,7 +98,7 @@
 
       <!-- Спр. "Иглы" -->
       <div class="col-span-12 grid grid-cols-12 gap-3">
-        <div class="col-span-3 flex items-center gap-2">
+        <div class="2xl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-4 col-span-6 flex items-center gap-2">
           <a-input
               :disabled="formState.injectionType !== InjectionType.Spine"
               class="w-full"
@@ -108,12 +108,12 @@
               :disabled="formState.injectionType !== InjectionType.Spine"
               type="button"
               @click="showModal('spineType', 'spineType')"
-              class="border flex justify-center items-center w-10 h-full rounded">
+              class="border flex justify-center items-center w-10 py-2 rounded">
             <MenuUnfoldOutlined/>
           </button>
         </div>
 
-        <div class="col-span-3 flex items-center gap-2">
+        <div class="2xl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-4 col-span-6 flex items-center gap-2">
           <a-input
               :disabled="formState.injectionType !== InjectionType.Spine"
               class="w-full"
@@ -123,7 +123,7 @@
               :disabled="formState.injectionType !== InjectionType.Spine"
               type="button"
               @click="showModal('spine', 'spine')"
-              class="border flex justify-center items-center w-10 h-full rounded">
+              class="border flex justify-center items-center w-10 py-2 rounded">
             <MenuUnfoldOutlined/>
           </button>
         </div>
@@ -131,7 +131,7 @@
 
       <!-- Спр. "Катетеры" -->
       <div class="col-span-12 grid grid-cols-12 gap-3 mb-2">
-        <div class="col-span-3 flex items-center gap-2">
+        <div class="2xl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-4 col-span-6 flex items-center gap-2">
           <a-input
               :disabled="formState.injectionType === InjectionType.Spine"
               class="w-full"
@@ -146,7 +146,7 @@
           </button>
         </div>
 
-        <div class="col-span-3 flex items-center gap-2">
+        <div class="2xl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-4 col-span-6 flex items-center gap-2">
           <a-input
               :disabled="formState.injectionType === InjectionType.Spine"
               class="w-full"
@@ -163,7 +163,7 @@
       </div>
 
       <!-- Спр. "Бикарбонат" -->
-      <div class="col-span-3 md:col-span-4 sm:col-span-6">
+      <div class="2xl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-4 col-span-6">
         <a-typography-text strong class="font-medium mb-2">Бикарбонат</a-typography-text>
         <div class="gap-2 flex items-center">
           <a-input
@@ -181,7 +181,7 @@
       </div>
 
       <!-- Сухой вес пациента -->
-      <div class="xl:col-span-2 lg:col-span-3 md:col-span-4 sm:col-span-6">
+      <div class="2xl:col-span-2 xl:col-span-2 lg:col-span-3 md:col-span-4 col-span-6">
         <a-typography-text strong class="font-medium mb-2">Сухой Вес пациента</a-typography-text>
         <a-input-number
             v-model:value="formState.patientWeight"
@@ -190,7 +190,7 @@
       </div>
 
       <!-- Антикоагуляция -->
-      <div class="col-span-2 md:col-span-3 sm:col-span-6">
+      <div class="2xl:col-span-2 xl:col-span-2 lg:col-span-2 md:col-span-3 col-span-6">
         <a-typography-text strong class="font-medium mb-2">Антикоагуляция</a-typography-text>
         <a-input
             placeholder="Наименование"
@@ -198,7 +198,7 @@
       </div>
 
       <!-- Объем -->
-      <div class="col-span-2 md:col-span-3">
+      <div class="2xl:col-span-2 xl:col-span-2 lg:col-span-2 md:col-span-3 col-span-6">
         <a-typography-text strong class="font-medium mb-2">Объем</a-typography-text>
         <a-input
             v-model:value="formState.anticoagulationVolume"
@@ -253,7 +253,7 @@
       </div>
 
       <!-- Путь приёма -->
-      <div class="col-span-3 grid grid-cols-12 mt-2">
+      <div class="2xl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-4 col-span-6 grid grid-cols-12 mt-2">
         <a-typography-text strong class="font-medium col-span-12">
           Путь приёма
           <span style="color: red">*</span>
@@ -270,7 +270,7 @@
       </div>
 
       <!-- Дозировка -->
-      <div class="col-span-3 grid grid-cols-12 mt-2">
+      <div class="2xl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-4 col-span-6 grid grid-cols-12 mt-2">
         <a-typography-text strong class="font-medium col-span-12">Дозировка<span style="color: red">*</span></a-typography-text>
         <div class="col-span-12 flex items-center gap-2">
           <a-input placeholder="Basic usage" :value="formState.doses.name !== '' ? formState.doses.name : 'Спр. Дозы препаратов'"/>
@@ -298,7 +298,7 @@
       </div>
 
       <!-- Начало приёма -->
-      <div class="col-span-2 mt-2">
+      <div class="2xl:col-span-2 xl:col-span-2 lg:col-span-2 md:col-span-4 col-span-6 mt-2">
         <a-typography-text strong class="font-medium">Начало приёма</a-typography-text>
         <a-date-picker
             v-model:value="formState.sessionDateStart"
@@ -307,7 +307,7 @@
       </div>
 
       <!-- Конец приёма -->
-      <div class="col-span-2 mt-2">
+      <div class="2xl:col-span-2 xl:col-span-2 lg:col-span-2 md:col-span-4 col-span-6 mt-2">
         <a-typography-text strong class="font-medium">Конец приёма</a-typography-text>
         <a-date-picker
             v-model:value="formState.sessionDateEnd"
@@ -346,7 +346,7 @@
       </div>
 
       <!-- Путь приёма -->
-      <div class="col-span-3 grid grid-cols-12 mt-2">
+      <div class="2xl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-4 col-span-6 grid grid-cols-12 mt-2">
         <a-typography-text strong class="font-medium col-span-12">
           Путь приёма
           <span style="color: red">*</span>
@@ -363,7 +363,7 @@
       </div>
 
       <!-- Дозировка -->
-      <div class="col-span-3 grid grid-cols-12 mt-2">
+      <div class="2xl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-4 col-span-6 grid grid-cols-12 mt-2">
         <a-typography-text strong class="font-medium col-span-12">Дозировка<span style="color: red">*</span></a-typography-text>
         <div class="col-span-12 flex items-center gap-2">
           <a-input placeholder="Basic usage" :value="formState.TreatmentDoses.name !== '' ? formState.TreatmentDoses.name : 'Спр. Дозы препаратов'"/>
@@ -379,7 +379,7 @@
       <!-- Кратность прием -->
       <div class="col-span-12 grid grid-cols-12 gap-3">
         <!-- Кратность приема -->
-        <div class="col-span-3 grid grid-cols-12 mt-2">
+        <div class="2xl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-8 col-span-12 grid grid-cols-12 mt-2">
           <a-typography-text strong class="font-medium col-span-12">Кратность приема<span style="color: red">*</span></a-typography-text>
           <div class="col-span-12 flex items-center gap-2">
             <a-input placeholder="Basic usage" :value="formState.TreatmentReceptionCount.name !== '' ? formState.TreatmentReceptionCount.name : 'Спр. Кратность приема'"/>
@@ -393,7 +393,7 @@
         </div>
 
         <!-- Начало приёма -->
-        <div class="col-span-2 mt-2">
+        <div class="2xl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-5 col-span-6 mt-2">
           <a-typography-text strong class="font-medium">Начало приёма</a-typography-text>
           <a-date-picker
               v-model:value="formState.TreatmentSessionDateStart"
@@ -402,7 +402,7 @@
         </div>
 
         <!-- Конец приёма -->
-        <div class="col-span-2 mt-2">
+        <div class="2xl:col-span-3 xl:col-span-3 lg:col-span-3 md:col-span-5 col-span-6 mt-2">
           <a-typography-text strong class="font-medium">Конец приёма</a-typography-text>
           <a-date-picker
               v-model:value="formState.TreatmentSessionDateEnd"
@@ -441,7 +441,7 @@
       </div>
 
       <!-- Текст рекомендации пациенту -->
-      <div class="col-span-7">
+      <div class="2xl:col-span-7 xl:col-span-7 lg:col-span-7 md:col-span-12 col-span-12">
         <div class="w-full flex items-center gap-2">
           <a-input
               placeholder="Текст рекомендации пациенту..."
@@ -460,7 +460,7 @@
       </div>
 
       <!-- Рекомендации пациенту -->
-      <div class="col-span-7 mt-3">
+      <div class="2xl:col-span-7 xl:col-span-7 lg:col-span-7 md:col-span-12 col-span-12 mt-3">
         <!-- Результат -->
         <div class="border p-5 flex flex-wrap gap-5 mt-4">
           <div class="w-full pb-2" v-for="(recommendation, index) in formState.recommendations" :key="index">
@@ -471,7 +471,7 @@
       </div>
 
       <!-- Данные о назначении -->
-      <div class="col-span-7 flex items-center gap-5 mt-3">
+      <div class="2xl:col-span-7 xl:col-span-7 lg:col-span-7 md:col-span-12 col-span-12 flex items-center gap-5 mt-3">
         <div class="flex items-center gap-1">
           <CalendarOutlined />
           {{ formState.dateAppointment.format('DD:MM:YYYY') }}

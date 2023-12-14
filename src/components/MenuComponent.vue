@@ -1,10 +1,10 @@
 <template>
-  <div :class="isTabletResolution ? 'menu-parent-active' : 'menu-parent'">
-    <div :class="isTabletResolution ? 'menu-mode' : 'menu'">
+  <div :class="toggleMenu ? 'h-screen' : 'flex'">
+    <div :class="toggleMenu ? 'w-full' : 'w-256 h-full'">
       <a-menu
           v-model:openKeys="menu.openKeys"
           v-model:selectedKeys="menu.selectedKeys"
-          :mode="isTabletResolution ? 'horizontal' : 'inline'"
+          :mode="toggleMenu ? 'horizontal' : 'inline'"
           theme="dark"
           :inline-collapsed="menu.collapsed"
           :items="menuItems"
@@ -20,8 +20,23 @@
 <script lang="ts" setup>
 import { useMenuStore } from '../store/menu/MenuStore.ts';
 import LoaderComponent from "./LoaderComponent.vue";
+import {ref} from "vue";
 
-const { menu, menuItems, loading, isTabletResolution } = useMenuStore();
+const { menu, menuItems, loading } = useMenuStore();
+
+const getWidth = () => {
+  // Создаем медиа-запрос, соответствующий условиям вашего CSS-медиа-запроса
+  const mediaQuery = window.matchMedia('(min-width: 1024px)');
+
+  // Возвращаем текущую ширину в зависимости от того, соответствует ли медиа-запрос
+  return mediaQuery.matches ? false : true;
+}
+
+window.addEventListener('resize', () => {
+  toggleMenu.value = getWidth()
+});
+
+const toggleMenu = ref<boolean>(false);
 
 </script>
 
@@ -31,17 +46,8 @@ const { menu, menuItems, loading, isTabletResolution } = useMenuStore();
   display: flex;
 }
 
-.menu-parent-active {
-  display: block;
-  width: 100%;
-}
-
 .menu {
   width: 256px; height: 100vh;
-}
-
-.menu-mode{
-  width: 100%;
 }
 
 
