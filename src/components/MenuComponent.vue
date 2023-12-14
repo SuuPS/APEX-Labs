@@ -1,11 +1,10 @@
 <template>
-  <div class="menu-flex">
-    <div style="width: 256px; height: 100vh;">
+  <div :class="isTabletResolution ? 'menu-parent-active' : 'menu-parent'">
+    <div :class="isTabletResolution ? 'menu-mode' : 'menu'">
       <a-menu
-          style="height: 100%"
           v-model:openKeys="menu.openKeys"
           v-model:selectedKeys="menu.selectedKeys"
-          mode="inline"
+          :mode="isTabletResolution ? 'horizontal' : 'inline'"
           theme="dark"
           :inline-collapsed="menu.collapsed"
           :items="menuItems"
@@ -22,15 +21,27 @@
 import { useMenuStore } from '../store/menu/MenuStore.ts';
 import LoaderComponent from "./LoaderComponent.vue";
 
-const { menu, menuItems, loading } = useMenuStore();
+const { menu, menuItems, loading, isTabletResolution } = useMenuStore();
 
 </script>
 
 <style scoped>
 
-.menu-flex {
+.menu-parent {
   display: flex;
-  height: 100vh;
+}
+
+.menu-parent-active {
+  display: block;
+  width: 100%;
+}
+
+.menu {
+  width: 256px; height: 100vh;
+}
+
+.menu-mode{
+  width: 100%;
 }
 
 

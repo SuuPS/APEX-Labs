@@ -38,7 +38,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useAppointmentStore } from "../store/appointment/appointmentStore.ts";
+import { useAppointmentStore } from "../../store/appointment/appointmentStore.ts";
 
 const { appointmentDatas, doctorFio } = useAppointmentStore()
 

@@ -163,7 +163,7 @@
       </div>
 
       <!-- Спр. "Бикарбонат" -->
-      <div class="col-span-3">
+      <div class="col-span-3 md:col-span-4 sm:col-span-6">
         <a-typography-text strong class="font-medium mb-2">Бикарбонат</a-typography-text>
         <div class="gap-2 flex items-center">
           <a-input
@@ -181,7 +181,7 @@
       </div>
 
       <!-- Сухой вес пациента -->
-      <div class="col-span-2">
+      <div class="xl:col-span-2 lg:col-span-3 md:col-span-4 sm:col-span-6">
         <a-typography-text strong class="font-medium mb-2">Сухой Вес пациента</a-typography-text>
         <a-input-number
             v-model:value="formState.patientWeight"
@@ -190,7 +190,7 @@
       </div>
 
       <!-- Антикоагуляция -->
-      <div class="col-span-2">
+      <div class="col-span-2 md:col-span-3 sm:col-span-6">
         <a-typography-text strong class="font-medium mb-2">Антикоагуляция</a-typography-text>
         <a-input
             placeholder="Наименование"
@@ -198,7 +198,7 @@
       </div>
 
       <!-- Объем -->
-      <div class="col-span-2">
+      <div class="col-span-2 md:col-span-3">
         <a-typography-text strong class="font-medium mb-2">Объем</a-typography-text>
         <a-input
             v-model:value="formState.anticoagulationVolume"
@@ -510,11 +510,11 @@
 
 <script lang="ts" setup>
 import {reactive} from 'vue';
-import CommonView from "./CommonView.vue";
+import CommonView from "../CommonView.vue";
 import {MenuUnfoldOutlined, PlusCircleOutlined, UserOutlined, CalendarOutlined} from '@ant-design/icons-vue';
-import {useAppointmentStore} from '../store/appointment/appointmentStore.ts'
-import {InjectionType, modalType, SoftType} from "../store/appointment/appointmentTypes.ts";
-import {DataItem} from "../store/common/commonTypes.ts";
+import {useAppointmentStore} from '../../store/appointment/appointmentStore.ts'
+import {InjectionType, modalType, SoftType} from "../../store/appointment/appointmentTypes.ts";
+import {DataItem} from "../../store/common/commonTypes.ts";
 import AppointmentsFfterSessionTable from "./AppointmentsFfterSessionTable.vue";
 
 const useAppointment = useAppointmentStore()

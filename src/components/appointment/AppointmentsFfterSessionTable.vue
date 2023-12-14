@@ -25,7 +25,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import {DeleteOutlined} from '@ant-design/icons-vue';
-import { useAppointmentStore } from "../store/appointment/appointmentStore.ts";
+import { useAppointmentStore } from "../../store/appointment/appointmentStore.ts";
 
 const { addSessionTable, formState, delSessionTable } = useAppointmentStore()
 

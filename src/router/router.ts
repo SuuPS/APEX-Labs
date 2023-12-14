@@ -14,12 +14,12 @@ const routes: RouteRecordRaw[] = [
             {
                 path: '/menu/appointment-list',
                 name:'AppointmentList',
-                component: () => import('../components/AppointmentList.vue')
+                component: () => import('../components/appointment/AppointmentList.vue')
             },
             {
                 path: '/menu/appointment-form',
                 name:'AppointmentForm',
-                component: () => import('../components/AppointmentForm.vue')
+                component: () => import('../components/appointment/AppointmentForm.vue')
             }
         ]
     }
